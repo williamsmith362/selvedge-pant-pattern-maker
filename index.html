@@ -99,10 +99,11 @@ body::after{
 
 .toggle{
     position:fixed;
-    top:14px;
-    left:14px;
-    width:34px;
-    height:34px;
+    top:12px;
+    right:12px;
+    left:auto;
+    width:44px;
+    height:44px;
     border-radius:50%;
     border:1px solid var(--border);
     background:var(--card);
@@ -110,9 +111,10 @@ body::after{
     align-items:center;
     justify-content:center;
     cursor:pointer;
-    font-size:16px;
+    font-size:18px;
     box-shadow:var(--shadow);
     user-select:none;
+    z-index:1000;
 }
 
 h1{
@@ -172,6 +174,8 @@ h2::after{
 input{
     width:140px;
     padding:10px 12px;
+    min-height:44px;
+    font-size:16px;
     border-radius:8px;
     border:1px solid var(--border);
     background:var(--card);
@@ -339,6 +343,99 @@ input:focus{
     border:none;
     transform-origin:top center;
     transition:transform 0.2s ease;
+}
+
+/* MOBILE OPTIMIZATION */
+
+@media (max-width:768px){
+
+    body{
+        padding:20px 12px;
+    }
+
+    .container{
+        width:100%;
+    }
+
+    h1{
+        font-size:24px;
+        letter-spacing:2px;
+        margin-bottom:24px;
+        padding:0 40px;
+    }
+
+    .grid{
+        grid-template-columns:1fr;
+        gap:16px;
+    }
+
+    .card{
+        padding:16px;
+        border-radius:12px;
+    }
+
+    .input-row,
+    .row{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:8px;
+    }
+
+    .input-row span,
+    .row span{
+        width:100%;
+    }
+
+    input{
+        width:100%;
+    }
+
+    .panel-header{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:10px;
+    }
+
+    .preview-btn{
+        width:100%;
+        min-height:44px;
+    }
+
+    .preview-window{
+        width:100vw;
+        height:100vh;
+        border-radius:0;
+    }
+
+    .preview-topbar{
+        flex-wrap:wrap;
+        height:auto;
+        padding:12px;
+        gap:10px;
+    }
+
+    .preview-title{
+        width:100%;
+    }
+
+    .preview-actions{
+        width:100%;
+        flex-wrap:wrap;
+        gap:8px;
+    }
+
+    .zoom-btn,
+    .close-btn,
+    .download-btn{
+        flex:1;
+        min-width:70px;
+        min-height:44px;
+    }
+
+    .pdf-wrap{
+        height:calc(100% - 120px);
+    }
+
 }
 
 </style>
