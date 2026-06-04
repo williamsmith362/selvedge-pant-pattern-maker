@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Selvedge Pant Pattern Tool</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+    --ink:#1f1f1f;
+    --muted:#6b6b6b;
+    --accent:#b4232a;
+
+    --paper:#f6f1e8;
+    --card:rgba(255,255,255,0.65);
+    --border:rgba(0,0,0,0.08);
+    --shadow:0 6px 18px rgba(0,0,0,0.06);
+}
+
+body.dark{
+    --ink:#f5f5f5;
+    --muted:#b9b9b9;
+    --paper:#12141a;
+    --card:rgba(25,28,36,0.92);
+    --border:rgba(255,255,255,0.08);
+    --shadow:0 10px 25px rgba(0,0,0,0.45);
+}
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Inter, Arial, sans-serif;
+    color:var(--ink);
+    padding:40px 20px;
+    min-height:100vh;
+    background:var(--paper);
+    transition:0.25s ease;
+}
+
+.container{
+    position:relative;
+    max-width:1200px;
+    margin:auto;
+    animation:settle 0.6s ease-out;
+}
+
+@keyframes settle{
+    from{
+        opacity:0;
+        transform:translateY(10px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:0.06;
+
+    background:
+    repeating-linear-gradient(
+    0deg,
+    rgba(0,0,0,0.02) 0px,
+    transparent 1px,
+    transparent 6px),
+
+    repeating-linear-gradient(
+    90deg,
+    rgba(0,0,0,0.02) 0px,
+    transparent 1px,
+    transparent 6px);
+}
+
+body.dark::before{
+    opacity:0.03;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background:radial-gradient(circle at center, transparent 45%, rgba(0,0,0,0.08) 100%);
+}
+
+.toggle{
+    position:fixed;
+    top:14px;
+    left:14px;
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    border:1px solid var(--border);
+    background:var(--card);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    font-size:16px;
+    box-shadow:var(--shadow);
+    user-select:none;
+}
+
+h1{
+    text-align:center;
+    font-size:40px;
+    font-weight:800;
+    letter-spacing:4px;
+    margin-bottom:40px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:28px;
+}
+
+.card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:22px;
+    box-shadow:var(--shadow);
+    transition:0.2s ease;
+}
+
+.card:hover{
+    transform:translateY(-3px);
+}
+
+h2{
+    margin-top:0;
+    font-size:20px;
+    font-weight:700;
+    padding-bottom:10px;
+    position:relative;
+}
+
+h2::after{
+    content:"";
+    position:absolute;
+    left:0;
+    bottom:0;
+    width:100%;
+    height:1px;
+    background:var(--border);
+}
+
+.input-row,
+.row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px 0;
+    border-bottom:1px solid var(--border);
+}
+
+input{
+    width:140px;
+    padding:10px 12px;
+    border-radius:8px;
+    border:1px solid var(--border);
+    background:var(--card);
+    color:var(--ink);
+    outline:none;
+    transition:0.2s ease;
+}
+
+input:focus{
+    box-shadow:0 0 0 3px rgba(180,35,42,0.15);
+}
+
+.row span:first-child{
+    font-size:14px;
+}
+
+.row span:last-child{
+    font-weight:600;
+    cursor:pointer;
+}
+
+.row span:last-child:hover{
+    color:var(--accent);
+}
+
+.row.updated span:last-child{
+    animation:inkFade 0.25s ease;
+}
+
+@keyframes inkFade{
+    0%{opacity:0.2; transform:translateY(2px);}
+    100%{opacity:1; transform:translateY(0);}
+}
+
+/* header */
+
+.panel-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
+}
+
+.panel-header h2{
+    margin:0;
+    padding:0;
+}
+
+.panel-header h2::after{
+    display:none;
+}
+
+.preview-btn{
+    border:none;
+    background:var(--accent);
+    color:white;
+    padding:10px 16px;
+    border-radius:10px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+/* modal */
+
+.preview-modal{
+    position:fixed;
+    inset:0;
+    z-index:999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    opacity:0;
+    pointer-events:none;
+    transition:0.3s ease;
+}
+
+.preview-modal.active{
+    opacity:1;
+    pointer-events:auto;
+}
+
+.preview-backdrop{
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,0.55);
+    backdrop-filter:blur(6px);
+}
+
+.preview-window{
+    position:relative;
+    width:min(1100px,92vw);
+    height:min(90vh,900px);
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 20px 60px rgba(0,0,0,0.35);
+    transform:translateY(30px) scale(0.96);
+    opacity:0;
+    transition:transform 0.35s ease, opacity 0.35s ease;
+}
+
+.preview-modal.active .preview-window{
+    transform:translateY(0) scale(1);
+    opacity:1;
+}
+
+.preview-topbar{
+    height:62px;
+    padding:0 18px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-bottom:1px solid var(--border);
+}
+
+.preview-title{
+    font-size:15px;
+    font-weight:700;
+}
+
+.preview-actions{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.zoom-btn,
+.close-btn,
+.download-btn{
+    border:none;
+    background:rgba(255,255,255,0.08);
+    color:var(--ink);
+    text-decoration:none;
+    width:auto;
+    min-width:38px;
+    height:38px;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    transition:0.2s ease;
+    font-weight:700;
+    padding:0 14px;
+}
+
+.zoom-btn:hover,
+.close-btn:hover,
+.download-btn:hover{
+    transform:translateY(-1px);
+    background:rgba(255,255,255,0.14);
+}
+
+.pdf-wrap{
+    width:100%;
+    height:calc(100% - 62px);
+    overflow:auto;
+    background:#2b2b2b;
+}
+
+.pdf-frame{
+    width:100%;
+    height:100%;
+    border:none;
+    transform-origin:top center;
+    transition:transform 0.2s ease;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="toggle" onclick="toggleTheme()" id="themeBtn">☀</div>
+
+<div class="container">
+
+<h1>SELVEDGE PANT PATTERN TOOL</h1>
+
+<div class="grid">
+
+<div class="card">
+
+<h2>Inputs</h2>
+
+<div class="input-row"><span>Waistband Width</span><input id="waistbandwidth" type="number"></div>
+<div class="input-row"><span>Waist</span><input id="waist" type="number"></div>
+<div class="input-row"><span>Seat</span><input id="seat" type="number"></div>
+<div class="input-row"><span>Rise</span><input id="rise" type="number"></div>
+<div class="input-row"><span>Leg Opening</span><input id="legOpening" type="number"></div>
+<div class="input-row"><span>Total Length</span><input id="totalLength" type="number"></div>
+
+</div>
+
+<div class="card">
+
+<h2>Key</h2>
+
+<div class="row"><span>Flat Felled Seam Allowance</span><span>5/8th inch</span></div>
+<div class="row"><span>(Inseam, Yoke, Backcurve)</span><span></span></div>
+<div class="row"><span>Back Panel Outseam Allowance</span><span>1 inch</span></div>
+<div class="row"><span>Front Panel Outseam Allowance</span><span>0 inch</span></div>
+<div class="row"><span>Waistband Allowance</span><span>0.5 inch</span></div>
+<div class="row"><span>Front Curve Allowance</span><span>0.25 inch at straight </span></div>
+<div class="row"><span></span><span>0.5 inch at curve</span></div>
+
+</div>
+
+</div>
+
+<div class="grid" style="margin-top:24px;">
+
+<div class="card">
+
+<div class="panel-header">
+<h2>Front Panel</h2>
+<button class="preview-btn" onclick="openFront()">Preview</button>
+</div>
+
+<div id="front"></div>
+
+</div>
+
+<div class="card">
+
+<div class="panel-header">
+<h2>Back Panel</h2>
+<button class="preview-btn" onclick="openBack()">Preview</button>
+</div>
+
+<div id="back"></div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- FRONT MODAL -->
+<div class="preview-modal" id="frontModal">
+<div class="preview-backdrop" onclick="closeFront()"></div>
+
+<div class="preview-window">
+
+<div class="preview-topbar">
+<div class="preview-title">Front Panel PDF</div>
+
+<div class="preview-actions">
+
+<a href="media/fpg.pdf" target="_blank" class="download-btn">Open Tab</a>
+<a href="media/fpg.pdf" download class="download-btn">Download</a>
+
+<button class="zoom-btn" onclick="zoomOutF()">−</button>
+<button class="zoom-btn" onclick="zoomInF()">+</button>
+<button class="close-btn" onclick="closeFront()">✕</button>
+
+</div>
+</div>
+
+<div class="pdf-wrap">
+<iframe id="frontPdf" src="media/fpg.pdf" class="pdf-frame"></iframe>
+</div>
+
+</div>
+</div>
+
+<!-- BACK MODAL -->
+<div class="preview-modal" id="backModal">
+<div class="preview-backdrop" onclick="closeBack()"></div>
+
+<div class="preview-window">
+
+<div class="preview-topbar">
+<div class="preview-title">Back Panel PDF</div>
+
+<div class="preview-actions">
+
+<a href="media/bpg.pdf" target="_blank" class="download-btn">Open Tab</a>
+<a href="media/bpg.pdf" download class="download-btn">Download</a>
+
+<button class="zoom-btn" onclick="zoomOutB()">−</button>
+<button class="zoom-btn" onclick="zoomInB()">+</button>
+<button class="close-btn" onclick="closeBack()">✕</button>
+
+</div>
+</div>
+
+<div class="pdf-wrap">
+<iframe id="backPdf" src="media/bpg.pdf" class="pdf-frame"></iframe>
+</div>
+
+</div>
+</div>
+
+<script>
+
+let rowUnits = {};
+
+const ids = ["waistbandwidth","waist","seat","rise","legOpening","totalLength"];
+
+ids.forEach(id=>{
+    document.getElementById(id).addEventListener("input", calc);
+});
+
+function v(id){
+    return parseFloat(document.getElementById(id).value) || 0;
+}
+
+function fmt(key,x){
+    let u = rowUnits[key] || "in";
+    let val = u === "cm" ? x * 2.54 : x;
+    return val.toFixed(2) + " " + u;
+}
+
+function row(key,label,val){
+    return `
+    <div class="row">
+        <span>${label}</span>
+        <span onclick="toggleRow('${key}')">${fmt(key,val)}</span>
+    </div>`;
+}
+
+function toggleRow(key){
+    rowUnits[key] = rowUnits[key] === "cm" ? "in" : "cm";
+    calc();
+}
+
+function calc(){
+
+const wbw = v("waistbandwidth");
+const waist = v("waist");
+const seat = v("seat");
+const rise = v("rise") + 0.5;
+const lo = v("legOpening");
+const tl = v("totalLength");
+
+const crotch = rise - wbw;
+
+const riseV = crotch;
+const seatV = crotch * 0.75;
+
+const seatH = seat * 0.25 + 1;
+
+const riseH = seatH + (seat * 0.125 - 0.5)/2;
+
+const waistband = waist * 0.25 + 0.5;
+const bwaistband = waist * 0.25 + 1;
+
+const fp1_len = (tl - riseV) * 0.4;
+const fp2_len = (tl - riseV) * 0.3;
+const fp3_len = (tl - riseV) * 0.3;
+
+const fp1_open = (lo * 2 + 1) * 0.45;
+const fp2_open = (lo * 2) * 0.45;
+const fp3_open = (lo * 2) * 0.45;
+
+const seatOffset = (seat * 0.125 - 0.5) / 4;
+
+const backRiseH =
+(seat * 0.25 + 1) +
+seatOffset +
+(seat * 0.125 - 0.5)/2 +
+seatOffset;
+
+const bp1_len = (tl - riseV) * 0.4;
+const bp2_len = (tl - riseV) * 0.3;
+const bp3_len = (tl - riseV) * 0.3;
+
+const bp1_open = (lo * 2 + 1) * 0.55;
+const bp2_open = (lo * 2) * 0.55;
+const bp3_open = (lo * 2) * 0.55;
+
+document.getElementById("front").innerHTML =
+row("outseam","Outseam",tl)+
+row("riseV","Rise Vertical",riseV)+
+row("seatV","Seat Vertical",seatV)+
+row("riseH","Rise Horizontal",riseH)+
+row("seatH","Seat Horizontal",seatH)+
+row("waistband","Waistband",waistband)+
+row("fp1","1st Point Length",fp1_len)+
+row("fp1o","1st Point Opening",fp1_open)+
+row("fp2","2nd Point Length",fp2_len)+
+row("fp2o","2nd Point Opening",fp2_open)+
+row("fp3","3rd Point Length",fp3_len)+
+row("fp3o","3rd Point Opening",fp3_open);
+
+document.getElementById("back").innerHTML =
+row("boutseam","Outseam",tl)+
+row("briseV","Rise Vertical",riseV)+
+row("bseatV","Seat Vertical",seatV)+
+row("boffset","Seat Offset",seatOffset)+
+row("bRiseH","Rise Horizontal",backRiseH)+
+row("bwaistband","Waistband",bwaistband)+
+row("bp1","1st Point Length",bp1_len)+
+row("bp1o","1st Point Opening",bp1_open)+
+row("bp2","2nd Point Length",bp2_len)+
+row("bp2o","2nd Point Opening",bp2_open)+
+row("bp3","3rd Point Length",bp3_len)+
+row("bp3o","3rd Point Opening",bp3_open);
+}
+/* FRONT MODAL */
+function openFront(){document.getElementById("frontModal").classList.add("active");}
+function closeFront(){document.getElementById("frontModal").classList.remove("active");}
+
+let zF=1;
+function zoomInF(){zF+=0.1;document.getElementById("frontPdf").style.transform=`scale(${zF})`;}
+function zoomOutF(){zF=Math.max(0.5,zF-0.1);document.getElementById("frontPdf").style.transform=`scale(${zF})`;}
+
+/* BACK MODAL */
+function openBack(){document.getElementById("backModal").classList.add("active");}
+function closeBack(){document.getElementById("backModal").classList.remove("active");}
+
+let zB=1;
+function zoomInB(){zB+=0.1;document.getElementById("backPdf").style.transform=`scale(${zB})`;}
+function zoomOutB(){zB=Math.max(0.5,zB-0.1);document.getElementById("backPdf").style.transform=`scale(${zB})`;}
+
+/* theme */
+function toggleTheme(){
+document.body.classList.toggle("dark");
+document.getElementById("themeBtn").textContent =
+document.body.classList.contains("dark") ? "☾" : "☀";
+}
+
+calc();
+
+</script>
+
+</body>
+</html>
