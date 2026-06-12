@@ -581,17 +581,15 @@ h1{font-size:clamp(24px,5vw,50px);font-weight:800;letter-spacing:6px;text-transf
         <button class="m-btn close-btn" onclick="closeModal('easing')">✕</button>
       </div>
     </div>
-    <div class="video-wrap" id="videoWrap">
-      <video class="tutorial-video" id="easingVideo"
-             src="media/easing-tutorial.mp4"
-             controls preload="metadata" playsinline>
-        Your browser does not support HTML5 video.
-      </video>
-      <div class="video-placeholder" id="videoPlaceholder" style="display:none">
-        <span class="vp-icon">▶</span>
-        <span>No video file found — see instructions below</span>
-        <span class="vp-path">media/easing-tutorial.mp4</span>
-      </div>
+   <div class="video-wrap">
+  <iframe
+    src="https://www.youtube.com/embed/59btFjK3rx0?start=1390&end=1612"
+    class="pdf-frame"
+    title="Easing Tutorial"
+    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen>
+  </iframe>
+</div>
     </div>
   </div>
 </div>
@@ -959,14 +957,6 @@ document.addEventListener("keydown",e=>{
   if(e.key==="Escape"){closeModal("front");closeModal("back");closeModal("easing");}
 });
 
-/* ══ VIDEO PLACEHOLDER ══ */
-(function(){
-  const vid=document.getElementById("easingVideo");
-  const ph=document.getElementById("videoPlaceholder");
-  vid.addEventListener("loadedmetadata",()=>{ ph.style.display="none"; vid.style.display="block"; });
-  vid.addEventListener("error",()=>{ ph.style.display="flex"; vid.style.display="none"; });
-  vid.style.display="block";
-})();
 </script>
 </body>
 </html>
