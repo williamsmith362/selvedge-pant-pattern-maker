@@ -4,698 +4,969 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Selvedge Pant Pattern Tool</title>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
-
-:root{
-    --ink:#1f1f1f;
-    --muted:#6b6b6b;
-    --accent:#b4232a;
-
-    --paper:#f6f1e8;
-    --card:rgba(255,255,255,0.65);
-    --border:rgba(0,0,0,0.08);
-    --shadow:0 6px 18px rgba(0,0,0,0.06);
+/* ══ THEMES ══ */
+:root {
+  --ink:#1a1a1a; --ink2:#4a4a4a; --muted:#9a9a9a;
+  --accent:#b4232a; --accent-soft:rgba(180,35,42,0.09);
+  --green:#2a7a4a; --green-soft:rgba(42,122,74,0.10);
+  --warn:#b06a00; --warn-soft:rgba(176,106,0,0.08);
+  --paper:#f4efe6; --paper2:#ece6dc; --paper3:#e2dbd0;
+  --card:#ffffff; --card2:rgba(255,255,255,0.97);
+  --border:rgba(0,0,0,0.07); --border2:rgba(0,0,0,0.13);
+  --shadow:0 2px 12px rgba(0,0,0,0.06); --shadow-lg:0 16px 48px rgba(0,0,0,0.12);
+  --r:14px; --r-sm:8px; --mono:'JetBrains Mono',monospace;
+  --topbar-h:54px;
+}
+[data-theme="midnight"] {
+  --ink:#ede8e0; --ink2:#b0a898; --muted:#60584e;
+  --accent:#e05c5c; --accent-soft:rgba(224,92,92,0.12);
+  --green:#4ab870; --green-soft:rgba(74,184,112,0.10);
+  --warn:#e09a30; --warn-soft:rgba(224,154,48,0.09);
+  --paper:#131110; --paper2:#1c1917; --paper3:#252220;
+  --card:rgba(28,24,20,0.95); --card2:rgba(36,32,26,0.98);
+  --border:rgba(255,255,255,0.065); --border2:rgba(255,255,255,0.12);
+  --shadow:0 2px 12px rgba(0,0,0,0.4); --shadow-lg:0 16px 48px rgba(0,0,0,0.6);
+}
+[data-theme="slate"] {
+  --ink:#dde0ec; --ink2:#8890a8; --muted:#50586a;
+  --accent:#6a9fe8; --accent-soft:rgba(106,159,232,0.12);
+  --green:#4ac890; --green-soft:rgba(74,200,144,0.10);
+  --warn:#e0b040; --warn-soft:rgba(224,176,64,0.09);
+  --paper:#0c1018; --paper2:#141a26; --paper3:#1c2336;
+  --card:rgba(18,24,40,0.92); --card2:rgba(22,30,48,0.98);
+  --border:rgba(255,255,255,0.055); --border2:rgba(255,255,255,0.11);
+  --shadow:0 2px 12px rgba(0,0,0,0.45); --shadow-lg:0 16px 48px rgba(0,0,0,0.65);
+}
+[data-theme="ecru"] {
+  --ink:#272014; --ink2:#55493a; --muted:#938878;
+  --accent:#3d6b45; --accent-soft:rgba(61,107,69,0.10);
+  --green:#3d6b45; --green-soft:rgba(61,107,69,0.10);
+  --warn:#a86800; --warn-soft:rgba(168,104,0,0.09);
+  --paper:#f7f1e1; --paper2:#eee8d2; --paper3:#e5dfc4;
+  --card:rgba(255,251,240,0.92); --card2:rgba(255,253,246,0.97);
+  --border:rgba(70,50,10,0.09); --border2:rgba(70,50,10,0.16);
+  --shadow:0 2px 12px rgba(50,30,5,0.07); --shadow-lg:0 16px 48px rgba(50,30,5,0.13);
+}
+[data-theme="obsidian"] {
+  --ink:#ede0c4; --ink2:#c0aa80; --muted:#706050;
+  --accent:#c8a044; --accent-soft:rgba(200,160,68,0.12);
+  --green:#70b880; --green-soft:rgba(112,184,128,0.10);
+  --warn:#c88040; --warn-soft:rgba(200,128,64,0.09);
+  --paper:#080706; --paper2:#100e08; --paper3:#1a1710;
+  --card:rgba(16,14,9,0.96); --card2:rgba(22,20,13,0.99);
+  --border:rgba(255,230,160,0.055); --border2:rgba(255,230,160,0.11);
+  --shadow:0 2px 12px rgba(0,0,0,0.55); --shadow-lg:0 16px 48px rgba(0,0,0,0.75);
+}
+[data-theme="indigo"] {
+  --ink:#e8e4f8; --ink2:#a098c8; --muted:#58507a;
+  --accent:#a080f0; --accent-soft:rgba(160,128,240,0.12);
+  --green:#60c888; --green-soft:rgba(96,200,136,0.10);
+  --warn:#e0a840; --warn-soft:rgba(224,168,64,0.09);
+  --paper:#0e0c18; --paper2:#161428; --paper3:#201d38;
+  --card:rgba(20,18,36,0.94); --card2:rgba(26,24,44,0.98);
+  --border:rgba(180,160,255,0.07); --border2:rgba(180,160,255,0.13);
+  --shadow:0 2px 12px rgba(0,0,0,0.5); --shadow-lg:0 16px 48px rgba(0,0,0,0.7);
+}
+[data-theme="bone"] {
+  --ink:#1c1a16; --ink2:#4a4640; --muted:#9a9690;
+  --accent:#8a7060; --accent-soft:rgba(138,112,96,0.10);
+  --green:#4a7a60; --green-soft:rgba(74,122,96,0.10);
+  --warn:#9a6e20; --warn-soft:rgba(154,110,32,0.09);
+  --paper:#f0ece4; --paper2:#e8e2d8; --paper3:#ddd8ce;
+  --card:#faf8f4; --card2:rgba(250,248,244,0.97);
+  --border:rgba(0,0,0,0.07); --border2:rgba(0,0,0,0.12);
+  --shadow:0 2px 12px rgba(0,0,0,0.05); --shadow-lg:0 16px 48px rgba(0,0,0,0.10);
+}
+[data-theme="forest"] {
+  --ink:#e8ede0; --ink2:#90a080; --muted:#4a5840;
+  --accent:#80c060; --accent-soft:rgba(128,192,96,0.12);
+  --green:#80c060; --green-soft:rgba(128,192,96,0.10);
+  --warn:#d8a040; --warn-soft:rgba(216,160,64,0.09);
+  --paper:#0a0f08; --paper2:#111a0e; --paper3:#182414;
+  --card:rgba(16,24,12,0.94); --card2:rgba(20,30,16,0.98);
+  --border:rgba(160,220,80,0.07); --border2:rgba(160,220,80,0.13);
+  --shadow:0 2px 12px rgba(0,0,0,0.5); --shadow-lg:0 16px 48px rgba(0,0,0,0.7);
+}
+[data-theme="rose"] {
+  --ink:#2a1820; --ink2:#603848; --muted:#a07888;
+  --accent:#c0406a; --accent-soft:rgba(192,64,106,0.09);
+  --green:#408060; --green-soft:rgba(64,128,96,0.10);
+  --warn:#a06820; --warn-soft:rgba(160,104,32,0.09);
+  --paper:#fdf0f4; --paper2:#f5e4ea; --paper3:#ead8e0;
+  --card:#fffbfd; --card2:rgba(255,251,253,0.97);
+  --border:rgba(160,60,80,0.08); --border2:rgba(160,60,80,0.15);
+  --shadow:0 2px 12px rgba(120,40,60,0.07); --shadow-lg:0 16px 48px rgba(120,40,60,0.13);
+}
+[data-theme="dusk"] {
+  --ink:#ede0d8; --ink2:#b89888; --muted:#685850;
+  --accent:#e08860; --accent-soft:rgba(224,136,96,0.12);
+  --green:#70b888; --green-soft:rgba(112,184,136,0.10);
+  --warn:#e0b040; --warn-soft:rgba(224,176,64,0.09);
+  --paper:#100c0a; --paper2:#1a1410; --paper3:#241c18;
+  --card:rgba(24,18,14,0.95); --card2:rgba(32,24,18,0.98);
+  --border:rgba(255,180,120,0.065); --border2:rgba(255,180,120,0.12);
+  --shadow:0 2px 12px rgba(0,0,0,0.5); --shadow-lg:0 16px 48px rgba(0,0,0,0.7);
 }
 
-body.dark{
-    --ink:#f5f5f5;
-    --muted:#b9b9b9;
-    --paper:#12141a;
-    --card:rgba(25,28,36,0.92);
-    --border:rgba(255,255,255,0.08);
-    --shadow:0 10px 25px rgba(0,0,0,0.45);
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,sans-serif;color:var(--ink);background:var(--paper);min-height:100vh;padding:calc(var(--topbar-h) + 28px) 20px 100px;transition:background .35s,color .35s}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.025;background-image:repeating-linear-gradient(0deg,currentColor 0,currentColor 1px,transparent 1px,transparent 28px),repeating-linear-gradient(90deg,currentColor 0,currentColor 1px,transparent 1px,transparent 28px);background-size:28px 28px}
+
+/* ── Layout ── */
+.container{position:relative;z-index:1;max-width:1240px;margin:0 auto;animation:rise .45s ease-out}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+
+/* ══ TOPBAR ══ */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:900;height:var(--topbar-h);display:flex;align-items:center;justify-content:space-between;padding:0 18px;background:var(--paper);border-bottom:1px solid var(--border2);transition:background .35s}
+.topbar-left{display:flex;align-items:center;gap:6px}
+.topbar-right{display:flex;align-items:center;gap:8px}
+.tb-logo{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted);user-select:none}
+.tb-sep{width:1px;height:20px;background:var(--border2);margin:0 4px}
+.tb-btn{height:34px;padding:0 12px;border-radius:var(--r-sm);border:1px solid var(--border2);background:transparent;color:var(--ink2);font-size:11px;font-weight:700;font-family:var(--mono);cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:.18s;letter-spacing:.5px;white-space:nowrap}
+.tb-btn:hover{background:var(--paper3);color:var(--ink)}
+
+/* ══ THEME DROPDOWN ══ */
+.theme-wrap{position:relative}
+.theme-trigger{height:34px;padding:0 11px 0 10px;border-radius:var(--r-sm);border:1px solid var(--border2);background:transparent;color:var(--ink2);font-size:11px;font-weight:700;font-family:var(--mono);cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:.18s;letter-spacing:.5px;white-space:nowrap}
+.theme-trigger:hover{background:var(--paper3);color:var(--ink)}
+.theme-dot{width:11px;height:11px;border-radius:50%;flex-shrink:0;border:1.5px solid rgba(128,128,128,0.25)}
+.theme-caret{font-size:8px;opacity:.5;margin-left:1px;transition:transform .2s}
+.theme-wrap.open .theme-caret{transform:rotate(180deg)}
+.theme-dropdown{position:absolute;top:calc(100% + 6px);right:0;min-width:200px;background:var(--card2);border:1px solid var(--border2);border-radius:var(--r);box-shadow:var(--shadow-lg);padding:5px;display:none;z-index:1000}
+.theme-wrap.open .theme-dropdown{display:block}
+.theme-group-label{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);padding:6px 10px 3px;display:block}
+.theme-option{display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:var(--r-sm);cursor:pointer;transition:.15s}
+.theme-option:hover{background:var(--paper2)}
+.theme-option.active{background:var(--accent-soft)}
+.theme-option .to-swatch{width:20px;height:20px;border-radius:50%;flex-shrink:0;border:1.5px solid rgba(128,128,128,0.2)}
+.theme-option .to-name{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--ink);letter-spacing:.5px}
+.theme-option .to-desc{font-size:10px;color:var(--muted);margin-left:auto;letter-spacing:.3px}
+.theme-option.active .to-name{color:var(--accent)}
+.theme-divider{height:1px;background:var(--border);margin:4px 0}
+
+/* ══ HEADER ══ */
+.site-header{text-align:center;margin-bottom:40px;padding-top:6px;padding-bottom:32px;border-bottom:1px solid var(--border)}
+.eyebrow{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-bottom:12px;opacity:.8}
+h1{font-size:clamp(24px,5vw,50px);font-weight:800;letter-spacing:6px;text-transform:uppercase;line-height:1.05;color:var(--ink)}
+.subtitle{margin-top:10px;color:var(--muted);font-size:12px;letter-spacing:.5px}
+
+/* ══ TABS ══ */
+.tabs{display:flex;gap:0;margin-bottom:26px;border-bottom:1px solid var(--border2)}
+.tab{flex:none;padding:10px 20px;border:none;background:transparent;color:var(--muted);font-size:11px;font-weight:700;font-family:var(--mono);letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:.18s;position:relative;border-bottom:2px solid transparent;margin-bottom:-1px}
+.tab:hover{color:var(--ink2)}
+.tab.active{color:var(--ink);border-bottom-color:var(--accent)}
+
+/* ══ CARDS ══ */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:24px;box-shadow:var(--shadow);transition:box-shadow .2s}
+.card:hover{box-shadow:var(--shadow-lg)}
+.card-title{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+
+/* ══ INPUTS ══ */
+.input-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--border);gap:10px;transition:background .15s}
+.input-row:last-child{border-bottom:none}
+.input-row:focus-within{background:var(--accent-soft);margin:0 -10px;padding-left:10px;padding-right:10px;border-radius:var(--r-sm);border-bottom-color:transparent}
+.input-label{font-size:13px;color:var(--ink2);flex:1;font-weight:500}
+.input-row input{width:110px;padding:7px 10px;min-height:36px;font-size:14px;font-family:var(--mono);font-weight:600;border-radius:var(--r-sm);border:1px solid var(--border2);background:var(--paper2);color:var(--ink);outline:none;transition:.18s;text-align:right}
+.input-row input:focus{border-color:var(--accent);background:var(--paper);box-shadow:0 0 0 3px var(--accent-soft)}
+.input-row input.warn-input{border-color:var(--warn);box-shadow:0 0 0 3px var(--warn-soft)}
+
+/* ══ PRESETS ══ */
+.presets-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.preset-chip{font-family:var(--mono);font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;border:1px solid var(--border2);background:var(--paper2);color:var(--ink2);cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:5px}
+.preset-chip:hover{background:var(--paper3)}
+.preset-chip.active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.preset-chip .del{font-size:10px;opacity:.4;margin-left:2px}
+.preset-chip .del:hover{opacity:1;color:var(--accent)}
+.preset-save-row{display:flex;gap:8px;margin-top:14px}
+.preset-save-row input{flex:1;padding:7px 10px;font-size:13px;border-radius:var(--r-sm);border:1px solid var(--border2);background:var(--paper2);color:var(--ink);outline:none;font-family:Inter,sans-serif;transition:.18s}
+.preset-save-row input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.btn-sm{height:34px;padding:0 12px;border-radius:var(--r-sm);border:1px solid var(--border2);background:var(--paper3);color:var(--ink);font-size:11px;font-weight:700;font-family:var(--mono);cursor:pointer;transition:.15s;white-space:nowrap;letter-spacing:.3px}
+.btn-sm:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* ══ WARNINGS ══ */
+.warnings{margin-top:12px;display:flex;flex-direction:column;gap:6px}
+.warn-chip{font-size:12px;padding:8px 12px;border-radius:0;background:transparent;border-left:3px solid var(--warn);color:var(--warn);display:flex;align-items:center;gap:6px;font-weight:500}
+
+/* ══ SEAM ALLOWANCES ══ */
+.key-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);gap:10px}
+.key-row:last-child{border-bottom:none}
+.key-row .kl{font-size:13px;color:var(--ink2);flex:1}
+.key-row input.kv-input{width:88px;padding:5px 8px;font-size:13px;font-family:var(--mono);font-weight:600;border-radius:var(--r-sm);border:1px solid var(--border2);background:var(--paper2);color:var(--accent);outline:none;text-align:right;transition:.18s}
+.key-row input.kv-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.key-reset{font-family:var(--mono);font-size:10px;color:var(--muted);cursor:pointer;padding:3px 8px;border-radius:20px;border:1px solid var(--border2);background:transparent;transition:.15s;white-space:nowrap;letter-spacing:.3px}
+.key-reset:hover{background:var(--paper3);color:var(--ink)}
+
+/* ══ FABRIC ESTIMATE ══ */
+.fabric-row{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-radius:var(--r-sm);background:var(--green-soft);border:1px solid rgba(42,122,74,.18);gap:10px}
+.fabric-row .fl{font-size:13px;color:var(--ink2);flex:1}
+.fabric-row .fv{font-family:var(--mono);font-size:16px;font-weight:700;color:var(--green)}
+.fabric-inputs{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.fabric-input-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--border)}
+.fabric-input-row:last-child{border-bottom:none}
+.fabric-input-row label{font-size:13px;color:var(--ink2);flex:1}
+.fabric-input-row input{width:100px;padding:6px 9px;font-size:13px;font-family:var(--mono);font-weight:600;border-radius:var(--r-sm);border:1px solid var(--border2);background:var(--paper2);color:var(--ink);outline:none;text-align:right;transition:.18s}
+.fabric-input-row input:focus{border-color:var(--green);box-shadow:0 0 0 3px var(--green-soft)}
+
+/* ══ OUTPUT ROWS ══ */
+.mrow{display:flex;justify-content:space-between;align-items:center;padding:9px 10px;border-radius:var(--r-sm);transition:background .15s;gap:10px}
+.mrow:nth-child(even){background:var(--paper2)}
+.mrow:hover{background:var(--accent-soft)}
+.mrow-label{font-size:13px;color:var(--ink2);flex:1}
+.mrow-right{display:flex;align-items:center;gap:7px;flex-shrink:0}
+.mrow-value{font-family:var(--mono);font-size:15px;font-weight:600;color:var(--ink);min-width:72px;text-align:right}
+.unit-pill{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;padding:3px 7px;border-radius:20px;border:1px solid var(--border2);background:var(--paper);color:var(--muted);cursor:pointer;transition:.15s;user-select:none}
+.unit-pill:hover,.unit-pill.cm{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* ══ EMPTY STATE ══ */
+.empty-state{padding:32px 16px;text-align:center;color:var(--muted);font-size:13px}
+.empty-state::before{content:"✂";display:block;font-size:28px;margin-bottom:10px;opacity:.3;font-style:normal}
+
+/* ══ PANEL HEADER ══ */
+.panel-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.panel-title{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted)}
+.preview-btn{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;font-family:var(--mono);padding:6px 12px;border-radius:var(--r-sm);border:1px solid var(--accent);background:transparent;color:var(--accent);cursor:pointer;transition:.18s}
+.preview-btn:hover{background:var(--accent);color:#fff}
+
+/* ══ COPY BAR ══ */
+.copy-bar{margin-top:12px;display:flex;gap:8px;justify-content:flex-end}
+.copy-btn{font-size:11px;font-family:var(--mono);font-weight:600;padding:6px 12px;border-radius:var(--r-sm);border:1px solid var(--border2);background:transparent;color:var(--muted);cursor:pointer;transition:.15s;letter-spacing:.3px}
+.copy-btn:hover{background:var(--paper3);color:var(--ink)}
+.copy-btn.ok{color:var(--green);border-color:var(--green)}
+
+/* ══ NOTES ══ */
+.notes-label{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:18px;margin-bottom:6px;display:block}
+.notes-area{width:100%;min-height:68px;padding:10px 12px;border-radius:var(--r-sm);border:1px solid var(--border2);background:var(--paper2);color:var(--ink);font-size:13px;font-family:Inter,sans-serif;resize:vertical;outline:none;transition:.18s}
+.notes-area:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+
+/* ══ COMPARE ══ */
+.compare-row{display:flex;justify-content:space-between;align-items:center;padding:9px 10px;border-radius:var(--r-sm);gap:8px;transition:background .15s}
+.compare-row:nth-child(even){background:var(--paper2)}
+.compare-row .cr-label{font-size:13px;color:var(--ink2);flex:1}
+.compare-row .cr-vals{display:flex;gap:12px;align-items:center;font-family:var(--mono);font-size:13px}
+.compare-row .cr-a{font-weight:600;color:var(--ink)}
+.compare-row .cr-b{color:var(--muted)}
+.compare-row .cr-diff{font-size:11px;padding:2px 7px;border-radius:10px}
+.compare-row .cr-diff.pos{background:var(--green-soft);color:var(--green)}
+.compare-row .cr-diff.neg{background:var(--accent-soft);color:var(--accent)}
+.compare-row .cr-diff.zero{background:var(--paper3);color:var(--muted)}
+
+/* ══ HISTORY ══ */
+.history-list{display:flex;flex-direction:column;gap:5px;max-height:300px;overflow-y:auto}
+.history-item{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-radius:var(--r-sm);background:var(--paper2);font-size:12px;gap:8px}
+.history-item .hi-time{font-family:var(--mono);color:var(--muted);white-space:nowrap}
+.history-item .hi-change{color:var(--ink2);flex:1}
+.history-item .hi-val{font-family:var(--mono);font-weight:600;color:var(--accent)}
+.section{margin-top:24px}
+
+/* ══ MODAL ══ */
+.modal{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .28s}
+.modal.open{opacity:1;pointer-events:auto}
+.modal-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(6px)}
+.modal-window{position:relative;width:min(1100px,93vw);height:min(90vh,920px);background:var(--card2);border:1px solid var(--border2);border-radius:18px;overflow:hidden;box-shadow:var(--shadow-lg);transform:translateY(18px) scale(.97);opacity:0;transition:transform .32s,opacity .32s}
+.modal.open .modal-window{transform:translateY(0) scale(1);opacity:1}
+.modal-topbar{display:flex;align-items:center;justify-content:space-between;height:56px;padding:0 18px;border-bottom:1px solid var(--border);flex-shrink:0}
+.modal-title{font-size:13px;font-weight:700;font-family:var(--mono);letter-spacing:.5px}
+.modal-actions{display:flex;align-items:center;gap:6px}
+.m-btn{display:inline-flex;align-items:center;justify-content:center;height:32px;padding:0 12px;border-radius:var(--r-sm);border:1px solid var(--border2);background:transparent;color:var(--ink2);font-size:11px;font-weight:600;font-family:var(--mono);cursor:pointer;text-decoration:none;transition:.18s;white-space:nowrap}
+.m-btn:hover{background:var(--paper2);color:var(--ink)}
+.m-btn.close-btn:hover{background:var(--paper3)}
+.pdf-wrap{width:100%;height:calc(100% - 56px);overflow:auto;background:#222;display:flex;align-items:flex-start;justify-content:center}
+.pdf-frame{width:100%;height:100%;border:none;transform-origin:top center;transition:transform .2s}
+
+/* ══ EASING BANNER ══ */
+.easing-banner{margin-top:16px;display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-radius:var(--r-sm);border:1px solid var(--warn);background:var(--warn-soft);cursor:pointer;gap:12px;transition:.18s}
+.easing-banner:hover{background:var(--accent-soft);border-color:var(--accent)}
+.easing-banner:hover .easing-link{color:var(--accent);border-color:var(--accent)}
+.easing-left{display:flex;align-items:center;gap:10px;flex:1;min-width:0}
+.easing-tag{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--warn);background:var(--warn-soft);border:1px solid var(--warn);border-radius:4px;padding:3px 7px;white-space:nowrap;flex-shrink:0}
+.easing-text{font-size:13px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.easing-link{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.5px;color:var(--warn);border:1px solid var(--warn);background:transparent;border-radius:var(--r-sm);padding:6px 12px;cursor:pointer;white-space:nowrap;transition:.18s;flex-shrink:0}
+
+/* ══ VIDEO MODAL ══ */
+.video-wrap{width:100%;height:calc(100% - 56px);background:#000;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.tutorial-video{width:100%;height:100%;object-fit:contain;display:block}
+.video-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:#888;font-family:var(--mono);font-size:12px;letter-spacing:1px;text-align:center;padding:40px}
+.video-placeholder .vp-icon{font-size:48px;opacity:.25}
+.video-placeholder .vp-path{font-size:11px;color:#666;margin-top:4px;font-style:italic}
+
+/* ══ PRINT ══ */
+@media print{
+  .topbar,.preview-btn,.copy-btn,.preset-save-row,.btn-sm,.unit-pill,.warnings,
+  .tabs,.notes-area,.notes-label,.key-reset,.fabric-inputs,.theme-wrap{display:none!important}
+  body{padding:0;background:#fff;color:#000}
+  body::before{display:none}
+  .container{max-width:100%}
+  .grid2{display:block}
+  .card{box-shadow:none;border:1px solid #ccc;break-inside:avoid;margin-bottom:14px}
+  h1{font-size:22px;letter-spacing:3px}
 }
 
-*{
-    box-sizing:border-box;
+/* ══ RESPONSIVE ══ */
+@media(max-width:800px){
+  .grid2{grid-template-columns:1fr;gap:16px}
+  body{padding:calc(var(--topbar-h) + 16px) 13px 80px}
+  h1{letter-spacing:2px}
+  .topbar-left .tb-logo{display:none}
+  .modal-window{width:100vw;height:100dvh;border-radius:0}
+  .modal-topbar{flex-wrap:wrap;height:auto;padding:12px;gap:7px}
+  .modal-title{width:100%}
+  .modal-actions{width:100%;flex-wrap:wrap}
+  .m-btn{flex:1;min-width:56px;min-height:40px}
+  .pdf-wrap{height:calc(100% - 120px)}
 }
-
-body{
-    margin:0;
-    font-family:Inter, Arial, sans-serif;
-    color:var(--ink);
-    padding:40px 20px;
-    min-height:100vh;
-    background:var(--paper);
-    transition:0.25s ease;
-}
-
-.container{
-    position:relative;
-    max-width:1200px;
-    margin:auto;
-    animation:settle 0.6s ease-out;
-}
-
-@keyframes settle{
-    from{
-        opacity:0;
-        transform:translateY(10px);
-    }
-
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
-
-body::before{
-    content:"";
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    opacity:0.06;
-
-    background:
-    repeating-linear-gradient(
-    0deg,
-    rgba(0,0,0,0.02) 0px,
-    transparent 1px,
-    transparent 6px),
-
-    repeating-linear-gradient(
-    90deg,
-    rgba(0,0,0,0.02) 0px,
-    transparent 1px,
-    transparent 6px);
-}
-
-body.dark::before{
-    opacity:0.03;
-}
-
-body::after{
-    content:"";
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    background:radial-gradient(circle at center, transparent 45%, rgba(0,0,0,0.08) 100%);
-}
-
-.toggle{
-    position:fixed;
-    top:12px;
-    right:12px;
-    left:auto;
-    width:44px;
-    height:44px;
-    border-radius:50%;
-    border:1px solid var(--border);
-    background:var(--card);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    cursor:pointer;
-    font-size:18px;
-    box-shadow:var(--shadow);
-    user-select:none;
-    z-index:1000;
-}
-
-h1{
-    text-align:center;
-    font-size:40px;
-    font-weight:800;
-    letter-spacing:4px;
-    margin-bottom:40px;
-}
-
-.grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:28px;
-}
-
-.card{
-    background:var(--card);
-    border:1px solid var(--border);
-    border-radius:14px;
-    padding:22px;
-    box-shadow:var(--shadow);
-    transition:0.2s ease;
-}
-
-.card:hover{
-    transform:translateY(-3px);
-}
-
-h2{
-    margin-top:0;
-    font-size:20px;
-    font-weight:700;
-    padding-bottom:10px;
-    position:relative;
-}
-
-h2::after{
-    content:"";
-    position:absolute;
-    left:0;
-    bottom:0;
-    width:100%;
-    height:1px;
-    background:var(--border);
-}
-
-.input-row,
-.row{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:12px 0;
-    border-bottom:1px solid var(--border);
-}
-
-input{
-    width:140px;
-    padding:10px 12px;
-    min-height:44px;
-    font-size:16px;
-    border-radius:8px;
-    border:1px solid var(--border);
-    background:var(--card);
-    color:var(--ink);
-    outline:none;
-    transition:0.2s ease;
-}
-
-input:focus{
-    box-shadow:0 0 0 3px rgba(180,35,42,0.15);
-}
-
-.row span:first-child{
-    font-size:14px;
-}
-
-.row span:last-child{
-    font-weight:600;
-    cursor:pointer;
-}
-
-.row span:last-child:hover{
-    color:var(--accent);
-}
-
-.row.updated span:last-child{
-    animation:inkFade 0.25s ease;
-}
-
-@keyframes inkFade{
-    0%{opacity:0.2; transform:translateY(2px);}
-    100%{opacity:1; transform:translateY(0);}
-}
-
-/* header */
-
-.panel-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:18px;
-}
-
-.panel-header h2{
-    margin:0;
-    padding:0;
-}
-
-.panel-header h2::after{
-    display:none;
-}
-
-.preview-btn{
-    border:none;
-    background:var(--accent);
-    color:white;
-    padding:10px 16px;
-    border-radius:10px;
-    font-weight:600;
-    cursor:pointer;
-}
-
-/* modal */
-
-.preview-modal{
-    position:fixed;
-    inset:0;
-    z-index:999;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    opacity:0;
-    pointer-events:none;
-    transition:0.3s ease;
-}
-
-.preview-modal.active{
-    opacity:1;
-    pointer-events:auto;
-}
-
-.preview-backdrop{
-    position:absolute;
-    inset:0;
-    background:rgba(0,0,0,0.55);
-    backdrop-filter:blur(6px);
-}
-
-.preview-window{
-    position:relative;
-    width:min(1100px,92vw);
-    height:min(90vh,900px);
-    background:var(--card);
-    border:1px solid var(--border);
-    border-radius:18px;
-    overflow:hidden;
-    box-shadow:0 20px 60px rgba(0,0,0,0.35);
-    transform:translateY(30px) scale(0.96);
-    opacity:0;
-    transition:transform 0.35s ease, opacity 0.35s ease;
-}
-
-.preview-modal.active .preview-window{
-    transform:translateY(0) scale(1);
-    opacity:1;
-}
-
-.preview-topbar{
-    height:62px;
-    padding:0 18px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    border-bottom:1px solid var(--border);
-}
-
-.preview-title{
-    font-size:15px;
-    font-weight:700;
-}
-
-.preview-actions{
-    display:flex;
-    align-items:center;
-    gap:10px;
-}
-
-.zoom-btn,
-.close-btn,
-.download-btn{
-    border:none;
-    background:rgba(255,255,255,0.08);
-    color:var(--ink);
-    text-decoration:none;
-    width:auto;
-    min-width:38px;
-    height:38px;
-    border-radius:10px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    cursor:pointer;
-    transition:0.2s ease;
-    font-weight:700;
-    padding:0 14px;
-}
-
-.zoom-btn:hover,
-.close-btn:hover,
-.download-btn:hover{
-    transform:translateY(-1px);
-    background:rgba(255,255,255,0.14);
-}
-
-.pdf-wrap{
-    width:100%;
-    height:calc(100% - 62px);
-    overflow:auto;
-    background:#2b2b2b;
-}
-
-.pdf-frame{
-    width:100%;
-    height:100%;
-    border:none;
-    transform-origin:top center;
-    transition:transform 0.2s ease;
-}
-
-/* MOBILE OPTIMIZATION */
-
-@media (max-width:768px){
-
-    body{
-        padding:20px 12px;
-    }
-
-    .container{
-        width:100%;
-    }
-
-    h1{
-        font-size:24px;
-        letter-spacing:2px;
-        margin-bottom:24px;
-        padding:0 40px;
-    }
-
-    .grid{
-        grid-template-columns:1fr;
-        gap:16px;
-    }
-
-    .card{
-        padding:16px;
-        border-radius:12px;
-    }
-
-    .input-row,
-    .row{
-        flex-direction:column;
-        align-items:flex-start;
-        gap:8px;
-    }
-
-    .input-row span,
-    .row span{
-        width:100%;
-    }
-
-    input{
-        width:100%;
-    }
-
-    .panel-header{
-        flex-direction:column;
-        align-items:flex-start;
-        gap:10px;
-    }
-
-    .preview-btn{
-        width:100%;
-        min-height:44px;
-    }
-
-    .preview-window{
-        width:100vw;
-        height:100vh;
-        border-radius:0;
-    }
-
-    .preview-topbar{
-        flex-wrap:wrap;
-        height:auto;
-        padding:12px;
-        gap:10px;
-    }
-
-    .preview-title{
-        width:100%;
-    }
-
-    .preview-actions{
-        width:100%;
-        flex-wrap:wrap;
-        gap:8px;
-    }
-
-    .zoom-btn,
-    .close-btn,
-    .download-btn{
-        flex:1;
-        min-width:70px;
-        min-height:44px;
-    }
-
-    .pdf-wrap{
-        height:calc(100% - 120px);
-    }
-
-}
-
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
-
 <body>
 
-<div class="toggle" onclick="toggleTheme()" id="themeBtn">☀</div>
+<!-- Top bar -->
+<div class="topbar">
+  <div class="topbar-left">
+    <span class="tb-logo">Selvedge</span>
+    <div class="tb-sep"></div>
+    <div class="theme-wrap" id="themeWrap">
+      <button class="theme-trigger" id="themeTrigger" onclick="toggleThemeDropdown()">
+        <span class="theme-dot" id="triggerDot"></span>
+        <span id="triggerLabel">Parchment</span>
+        <span class="theme-caret">▼</span>
+      </button>
+      <div class="theme-dropdown" id="themeDropdown">
+        <span class="theme-group-label">Light</span>
+        <div class="theme-option" data-t="parchment" onclick="setTheme('parchment')">
+          <span class="to-swatch" style="background:#f4efe6;border-color:#c8a898"></span>
+          <span class="to-name">Parchment</span>
+          <span class="to-desc">warm cream</span>
+        </div>
+        <div class="theme-option" data-t="ecru" onclick="setTheme('ecru')">
+          <span class="to-swatch" style="background:#f7f1e1;border-color:#3d6b45"></span>
+          <span class="to-name">Ecru</span>
+          <span class="to-desc">linen + forest</span>
+        </div>
+        <div class="theme-option" data-t="bone" onclick="setTheme('bone')">
+          <span class="to-swatch" style="background:#f0ece4;border-color:#8a7060"></span>
+          <span class="to-name">Bone</span>
+          <span class="to-desc">neutral warm</span>
+        </div>
+        <div class="theme-option" data-t="rose" onclick="setTheme('rose')">
+          <span class="to-swatch" style="background:#fdf0f4;border-color:#c0406a"></span>
+          <span class="to-name">Rose</span>
+          <span class="to-desc">blush + crimson</span>
+        </div>
+        <div class="theme-divider"></div>
+        <span class="theme-group-label">Dark</span>
+        <div class="theme-option" data-t="midnight" onclick="setTheme('midnight')">
+          <span class="to-swatch" style="background:#131110;border-color:#e05c5c"></span>
+          <span class="to-name">Midnight</span>
+          <span class="to-desc">charcoal + red</span>
+        </div>
+        <div class="theme-option" data-t="obsidian" onclick="setTheme('obsidian')">
+          <span class="to-swatch" style="background:#080706;border-color:#c8a044"></span>
+          <span class="to-name">Obsidian</span>
+          <span class="to-desc">black + gold</span>
+        </div>
+        <div class="theme-option" data-t="slate" onclick="setTheme('slate')">
+          <span class="to-swatch" style="background:#0c1018;border-color:#6a9fe8"></span>
+          <span class="to-name">Slate</span>
+          <span class="to-desc">navy + blue</span>
+        </div>
+        <div class="theme-option" data-t="indigo" onclick="setTheme('indigo')">
+          <span class="to-swatch" style="background:#0e0c18;border-color:#a080f0"></span>
+          <span class="to-name">Indigo</span>
+          <span class="to-desc">deep violet</span>
+        </div>
+        <div class="theme-option" data-t="forest" onclick="setTheme('forest')">
+          <span class="to-swatch" style="background:#0a0f08;border-color:#80c060"></span>
+          <span class="to-name">Forest</span>
+          <span class="to-desc">dark + green</span>
+        </div>
+        <div class="theme-option" data-t="dusk" onclick="setTheme('dusk')">
+          <span class="to-swatch" style="background:#100c0a;border-color:#e08860"></span>
+          <span class="to-name">Dusk</span>
+          <span class="to-desc">dark + amber</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <button class="tb-btn" onclick="printPage()">⎙ Print</button>
+    <button class="tb-btn" onclick="exportJSON()">↓ Export</button>
+  </div>
+</div>
 
 <div class="container">
 
-<h1>SELVEDGE PANT PATTERN TOOL</h1>
+  <header class="site-header">
+    <h1>Selvedge Jeans</h1>
+    <h2 class="eyebrow">Pattern Calculator</h2>
+    <p class="subtitle">Click any value to toggle in ↔ cm</p>
+  </header>
 
-<div class="grid">
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('calc')">Calculator</button>
+    <button class="tab" onclick="switchTab('compare')">Compare</button>
+    <button class="tab" onclick="switchTab('history')">History</button>
+  </div>
 
-<div class="card">
+  <!-- ══════════ CALCULATOR TAB ══════════ -->
+  <div id="tab-calc">
+    <div class="grid2">
 
-<h2>Inputs</h2>
+      <!-- Inputs -->
+      <div class="card">
+        <div class="card-title">Measurements (inches)</div>
+        <div class="presets-row" id="presetChips"></div>
+        <div class="input-row"><span class="input-label">Waistband Width</span><input id="waistbandwidth" type="number" min="0" step="0.25" placeholder="0.00"></div>
+        <div class="input-row"><span class="input-label">Waist</span><input id="waist" type="number" min="0" step="0.25" placeholder="0.00"></div>
+        <div class="input-row"><span class="input-label">Seat</span><input id="seat" type="number" min="0" step="0.25" placeholder="0.00"></div>
+        <div class="input-row"><span class="input-label">Rise</span><input id="rise" type="number" min="0" step="0.25" placeholder="0.00"></div>
+        <div class="input-row"><span class="input-label">Leg Opening</span><input id="legOpening" type="number" min="0" step="0.25" placeholder="0.00"></div>
+        <div class="input-row"><span class="input-label">Total Length</span><input id="totalLength" type="number" min="0" step="0.25" placeholder="0.00"></div>
+        <div class="preset-save-row">
+          <input type="text" id="presetName" placeholder="Name this preset…" maxlength="28">
+          <button class="btn-sm" onclick="savePreset()">Save</button>
+        </div>
+        <div class="warnings" id="warnings"></div>
+      </div>
 
-<div class="input-row"><span>Waistband Width</span><input id="waistbandwidth" type="number"></div>
-<div class="input-row"><span>Waist</span><input id="waist" type="number"></div>
-<div class="input-row"><span>Seat</span><input id="seat" type="number"></div>
-<div class="input-row"><span>Rise</span><input id="rise" type="number"></div>
-<div class="input-row"><span>Leg Opening</span><input id="legOpening" type="number"></div>
-<div class="input-row"><span>Total Length</span><input id="totalLength" type="number"></div>
+      <!-- Right column -->
+      <div style="display:flex;flex-direction:column;gap:22px">
 
-</div>
+        <!-- Seam allowances -->
+        <div class="card">
+          <div class="card-title">
+            <span>Seam Allowances</span>
+            <button class="key-reset" onclick="resetSeams()">Reset</button>
+          </div>
+          <div class="key-row"><span class="kl">Flat Felled (Inseam, Yoke, Back Curve)</span><input class="kv-input" id="sa_flatfelled" type="text" value="5/8″"></div>
+          <div class="key-row"><span class="kl">Back Panel Outseam</span><input class="kv-input" id="sa_back_out" type="text" value="1″"></div>
+          <div class="key-row"><span class="kl">Front Panel Outseam</span><input class="kv-input" id="sa_front_out" type="text" value="0″"></div>
+          <div class="key-row"><span class="kl">Waistband</span><input class="kv-input" id="sa_waistband" type="text" value="½″"></div>
+          <div class="key-row"><span class="kl">Front Curve — straight</span><input class="kv-input" id="sa_curve_str" type="text" value="¼″"></div>
+          <div class="key-row"><span class="kl">Front Curve — at curve</span><input class="kv-input" id="sa_curve_crv" type="text" value="½″"></div>
+        </div>
 
-<div class="card">
+        <!-- Fabric estimate -->
+        <div class="card">
+          <div class="card-title">
+            <span>Fabric Estimate</span>
+            <button class="key-reset" onclick="resetFabric()">Reset</button>
+          </div>
+          <div class="fabric-inputs">
+            <div class="fabric-input-row">
+              <label>Fabric width (in)</label>
+              <input id="fab_width" type="number" min="1" step="0.25" placeholder="e.g. 28">
+            </div>
+          </div>
+          <div id="fabricEstimate"><p class="empty-state">Enter measurements to estimate yardage</p></div>
+        </div>
 
-<h2>Key</h2>
+      </div>
+    </div>
 
-<div class="row"><span>Flat Felled Seam Allowance</span><span>5/8th inch</span></div>
-<div class="row"><span>(Inseam, Yoke, Backcurve)</span><span></span></div>
-<div class="row"><span>Back Panel Outseam Allowance</span><span>1 inch</span></div>
-<div class="row"><span>Front Panel Outseam Allowance</span><span>0 inch</span></div>
-<div class="row"><span>Waistband Allowance</span><span>0.5 inch</span></div>
-<div class="row"><span>Front Curve Allowance</span><span>0.25 inch at straight </span></div>
-<div class="row"><span></span><span>0.5 inch at curve</span></div>
+    <!-- Front + Back panels -->
+    <div class="grid2 section">
+      <div class="card">
+        <div class="panel-header">
+          <span class="panel-title">Front Panel</span>
+          <button class="preview-btn" onclick="openModal('front')">Preview PDF</button>
+        </div>
+        <div id="front"><p class="empty-state">Enter measurements to calculate</p></div>
+        <div class="copy-bar"><button class="copy-btn" id="copyFront" onclick="copyPanel('front')" style="display:none">Copy all</button></div>
+        <span class="notes-label">Notes</span>
+        <textarea class="notes-area" id="notesFront" placeholder="Front panel notes…" oninput="saveNotes()"></textarea>
+      </div>
+      <div class="card">
+        <div class="panel-header">
+          <span class="panel-title">Back Panel</span>
+          <button class="preview-btn" onclick="openModal('back')">Preview PDF</button>
+        </div>
+        <div id="back"><p class="empty-state">Enter measurements to calculate</p></div>
+        <div class="copy-bar"><button class="copy-btn" id="copyBack" onclick="copyPanel('back')" style="display:none">Copy all</button></div>
+        <span class="notes-label">Notes</span>
+        <textarea class="notes-area" id="notesBack" placeholder="Back panel notes…" oninput="saveNotes()"></textarea>
 
-</div>
+        <!-- Easing reminder -->
+        <div class="easing-banner" onclick="openModal('easing')">
+          <div class="easing-left">
+            <span class="easing-tag">IMPORTANT</span>
+            <span class="easing-text">Don't forget to add easing</span>
+          </div>
+          <button class="easing-link">▶ Click for tutorial</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-</div>
+  <!-- ══════════ COMPARE TAB ══════════ -->
+  <div id="tab-compare" style="display:none">
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title">Set A — Current</div>
+        <div id="cmp-a"><p class="empty-state">Enter measurements on the Calculator tab</p></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Set B — Load Preset</div>
+        <div class="presets-row" id="cmpPresetChips" style="margin-bottom:12px"></div>
+        <div id="cmp-b"><p class="empty-state">Load a saved preset to compare</p></div>
+      </div>
+    </div>
+    <div class="card section" id="cmp-diff-card" style="display:none">
+      <div class="card-title">Differences (A − B)</div>
+      <div id="cmp-diff"></div>
+    </div>
+  </div>
 
-<div class="grid" style="margin-top:24px;">
-
-<div class="card">
-
-<div class="panel-header">
-<h2>Front Panel</h2>
-<button class="preview-btn" onclick="openFront()">Preview</button>
-</div>
-
-<div id="front"></div>
-
-</div>
-
-<div class="card">
-
-<div class="panel-header">
-<h2>Back Panel</h2>
-<button class="preview-btn" onclick="openBack()">Preview</button>
-</div>
-
-<div id="back"></div>
-
-</div>
-
-</div>
+  <!-- ══════════ HISTORY TAB ══════════ -->
+  <div id="tab-history" style="display:none">
+    <div class="card">
+      <div class="card-title">
+        <span>Change Log</span>
+        <button class="btn-sm" onclick="clearHistory()">Clear</button>
+      </div>
+      <div class="history-list" id="historyList"><p class="empty-state">No changes yet</p></div>
+    </div>
+  </div>
 
 </div>
 
 <!-- FRONT MODAL -->
-<div class="preview-modal" id="frontModal">
-<div class="preview-backdrop" onclick="closeFront()"></div>
-
-<div class="preview-window">
-
-<div class="preview-topbar">
-<div class="preview-title">Front Panel PDF</div>
-
-<div class="preview-actions">
-
-<a href="media/fpg.pdf" target="_blank" class="download-btn">Open Tab</a>
-<a href="media/fpg.pdf" download class="download-btn">Download</a>
-
-<button class="zoom-btn" onclick="zoomOutF()">−</button>
-<button class="zoom-btn" onclick="zoomInF()">+</button>
-<button class="close-btn" onclick="closeFront()">✕</button>
-
-</div>
-</div>
-
-<div class="pdf-wrap">
-<iframe id="frontPdf" src="media/fpg.pdf" class="pdf-frame"></iframe>
-</div>
-
-</div>
+<div class="modal" id="modal-front" role="dialog">
+  <div class="modal-backdrop" onclick="closeModal('front')"></div>
+  <div class="modal-window">
+    <div class="modal-topbar">
+      <span class="modal-title">Front Panel PDF</span>
+      <div class="modal-actions">
+        <a href="media/fpg.pdf" target="_blank" class="m-btn">Open Tab</a>
+        <a href="media/fpg.pdf" download class="m-btn">Download</a>
+        <button class="m-btn" onclick="zoom('front',-0.15)">−</button>
+        <button class="m-btn" onclick="zoom('front',0.15)">+</button>
+        <button class="m-btn close-btn" onclick="closeModal('front')">✕</button>
+      </div>
+    </div>
+    <div class="pdf-wrap"><iframe id="pdf-front" src="media/fpg.pdf" class="pdf-frame" title="Front Panel PDF"></iframe></div>
+  </div>
 </div>
 
 <!-- BACK MODAL -->
-<div class="preview-modal" id="backModal">
-<div class="preview-backdrop" onclick="closeBack()"></div>
-
-<div class="preview-window">
-
-<div class="preview-topbar">
-<div class="preview-title">Back Panel PDF</div>
-
-<div class="preview-actions">
-
-<a href="media/bpg.pdf" target="_blank" class="download-btn">Open Tab</a>
-<a href="media/bpg.pdf" download class="download-btn">Download</a>
-
-<button class="zoom-btn" onclick="zoomOutB()">−</button>
-<button class="zoom-btn" onclick="zoomInB()">+</button>
-<button class="close-btn" onclick="closeBack()">✕</button>
-
-</div>
+<div class="modal" id="modal-back" role="dialog">
+  <div class="modal-backdrop" onclick="closeModal('back')"></div>
+  <div class="modal-window">
+    <div class="modal-topbar">
+      <span class="modal-title">Back Panel PDF</span>
+      <div class="modal-actions">
+        <a href="media/bpg.pdf" target="_blank" class="m-btn">Open Tab</a>
+        <a href="media/bpg.pdf" download class="m-btn">Download</a>
+        <button class="m-btn" onclick="zoom('back',-0.15)">−</button>
+        <button class="m-btn" onclick="zoom('back',0.15)">+</button>
+        <button class="m-btn close-btn" onclick="closeModal('back')">✕</button>
+      </div>
+    </div>
+    <div class="pdf-wrap"><iframe id="pdf-back" src="media/bpg.pdf" class="pdf-frame" title="Back Panel PDF"></iframe></div>
+  </div>
 </div>
 
-<div class="pdf-wrap">
-<iframe id="backPdf" src="media/bpg.pdf" class="pdf-frame"></iframe>
-</div>
-
-</div>
+<!-- EASING TUTORIAL MODAL -->
+<div class="modal" id="modal-easing" role="dialog">
+  <div class="modal-backdrop" onclick="closeModal('easing')"></div>
+  <div class="modal-window">
+    <div class="modal-topbar">
+      <span class="modal-title">Easing — Tutorial</span>
+      <div class="modal-actions">
+        <button class="m-btn close-btn" onclick="closeModal('easing')">✕</button>
+      </div>
+    </div>
+    <div class="video-wrap" id="videoWrap">
+      <video class="tutorial-video" id="easingVideo"
+             src="media/easing-tutorial.mp4"
+             controls preload="metadata" playsinline>
+        Your browser does not support HTML5 video.
+      </video>
+      <div class="video-placeholder" id="videoPlaceholder" style="display:none">
+        <span class="vp-icon">▶</span>
+        <span>No video file found — see instructions below</span>
+        <span class="vp-path">media/easing-tutorial.mp4</span>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
+/* ══ STATE ══ */
+const FIELDS = ["waistbandwidth","waist","seat","rise","legOpening","totalLength"];
+const FIELD_LABELS = {waistbandwidth:"Waistband Width",waist:"Waist",seat:"Seat",rise:"Rise",legOpening:"Leg Opening",totalLength:"Total Length"};
+const SEAM_DEFAULTS = {sa_flatfelled:"5/8″",sa_back_out:"1″",sa_front_out:"0″",sa_waistband:"½″",sa_curve_str:"¼″",sa_curve_crv:"½″"};
 
-let rowUnits = {};
+const THEME_META = {
+  parchment:{label:"Parchment",dot:"#b4232a",bg:"#f4efe6"},
+  ecru:{label:"Ecru",dot:"#3d6b45",bg:"#f7f1e1"},
+  bone:{label:"Bone",dot:"#8a7060",bg:"#f0ece4"},
+  rose:{label:"Rose",dot:"#c0406a",bg:"#fdf0f4"},
+  midnight:{label:"Midnight",dot:"#e05c5c",bg:"#131110"},
+  obsidian:{label:"Obsidian",dot:"#c8a044",bg:"#080706"},
+  slate:{label:"Slate",dot:"#6a9fe8",bg:"#0c1018"},
+  indigo:{label:"Indigo",dot:"#a080f0",bg:"#0e0c18"},
+  forest:{label:"Forest",dot:"#80c060",bg:"#0a0f08"},
+  dusk:{label:"Dusk",dot:"#e08860",bg:"#100c0a"},
+};
 
-const ids = ["waistbandwidth","waist","seat","rise","legOpening","totalLength"];
+const rowUnits = {};
+const zoomLevels = {front:1, back:1};
+let presets = JSON.parse(localStorage.getItem("sp_presets")||"{}");
+let changeLog = JSON.parse(localStorage.getItem("sp_history")||"[]");
+let notes = JSON.parse(localStorage.getItem("sp_notes")||'{"front":"","back":""}');
+let prevValues = {};
+let cmpPreset = null;
+let currentTab = "calc";
+let lastCalc = {};
 
-ids.forEach(id=>{
-    document.getElementById(id).addEventListener("input", calc);
-});
-
-function v(id){
-    return parseFloat(document.getElementById(id).value) || 0;
-}
-
-function fmt(key,x){
-    let u = rowUnits[key] || "in";
-    let val = u === "cm" ? x * 2.54 : x;
-    return val.toFixed(2) + " " + u;
-}
-
-function row(key,label,val){
-    return `
-    <div class="row">
-        <span>${label}</span>
-        <span onclick="toggleRow('${key}')">${fmt(key,val)}</span>
-    </div>`;
-}
-
-function toggleRow(key){
-    rowUnits[key] = rowUnits[key] === "cm" ? "in" : "cm";
+/* ══ INIT ══ */
+FIELDS.forEach(id => {
+  document.getElementById(id).addEventListener("input", e => {
+    const prev = prevValues[id] ?? "";
+    const curr = e.target.value;
+    if (prev !== curr && curr !== "") addHistory(FIELD_LABELS[id]+" changed", (prev||"—")+" → "+curr+"″");
+    prevValues[id] = curr;
     calc();
-}
+  });
+});
+document.getElementById("fab_width").addEventListener("input", calc);
+document.getElementById("notesFront").value = notes.front || "";
+document.getElementById("notesBack").value  = notes.back  || "";
 
-function calc(){
-
-const wbw = v("waistbandwidth");
-const waist = v("waist");
-const seat = v("seat");
-const rise = v("rise") + 0.5;
-const lo = v("legOpening");
-const tl = v("totalLength");
-
-const crotch = rise - wbw;
-
-const riseV = crotch;
-const seatV = crotch * 0.75;
-
-const seatH = seat * 0.25 + 1;
-
-const riseH = seatH + (seat * 0.125 - 0.5)/2;
-
-const waistband = waist * 0.25 + 0.5;
-const bwaistband = waist * 0.25 + 1;
-
-const fp1_len = (tl - riseV) * 0.4;
-const fp2_len = (tl - riseV) * 0.3;
-const fp3_len = (tl - riseV) * 0.3;
-
-const fp1_open = (lo * 2 + 1) * 0.45;
-const fp2_open = (lo * 2) * 0.45;
-const fp3_open = (lo * 2) * 0.45;
-
-const seatOffset = (seat * 0.125 - 0.5) / 4;
-
-const backRiseH =
-(seat * 0.25 + 1) +
-seatOffset +
-(seat * 0.125 - 0.5)/2 +
-seatOffset;
-
-const bp1_len = (tl - riseV) * 0.4;
-const bp2_len = (tl - riseV) * 0.3;
-const bp3_len = (tl - riseV) * 0.3;
-
-const bp1_open = (lo * 2 + 1) * 0.55;
-const bp2_open = (lo * 2) * 0.55;
-const bp3_open = (lo * 2) * 0.55;
-
-document.getElementById("front").innerHTML =
-row("outseam","Outseam",tl)+
-row("riseV","Rise Vertical",riseV)+
-row("seatV","Seat Vertical",seatV)+
-row("riseH","Rise Horizontal",riseH)+
-row("seatH","Seat Horizontal",seatH)+
-row("waistband","Waistband",waistband)+
-row("fp1","1st Point Length",fp1_len)+
-row("fp1o","1st Point Opening",fp1_open)+
-row("fp2","2nd Point Length",fp2_len)+
-row("fp2o","2nd Point Opening",fp2_open)+
-row("fp3","3rd Point Length",fp3_len)+
-row("fp3o","3rd Point Opening",fp3_open);
-
-document.getElementById("back").innerHTML =
-row("boutseam","Outseam",tl)+
-row("briseV","Rise Vertical",riseV)+
-row("bseatV","Seat Vertical",seatV)+
-row("boffset","Seat Offset",seatOffset)+
-row("bRiseH","Rise Horizontal",backRiseH)+
-row("bwaistband","Waistband",bwaistband)+
-row("bp1","1st Point Length",bp1_len)+
-row("bp1o","1st Point Opening",bp1_open)+
-row("bp2","2nd Point Length",bp2_len)+
-row("bp2o","2nd Point Opening",bp2_open)+
-row("bp3","3rd Point Length",bp3_len)+
-row("bp3o","3rd Point Opening",bp3_open);
-}
-/* FRONT MODAL */
-function openFront(){document.getElementById("frontModal").classList.add("active");}
-function closeFront(){document.getElementById("frontModal").classList.remove("active");}
-
-let zF=1;
-function zoomInF(){zF+=0.1;document.getElementById("frontPdf").style.transform=`scale(${zF})`;}
-function zoomOutF(){zF=Math.max(0.5,zF-0.1);document.getElementById("frontPdf").style.transform=`scale(${zF})`;}
-
-/* BACK MODAL */
-function openBack(){document.getElementById("backModal").classList.add("active");}
-function closeBack(){document.getElementById("backModal").classList.remove("active");}
-
-let zB=1;
-function zoomInB(){zB+=0.1;document.getElementById("backPdf").style.transform=`scale(${zB})`;}
-function zoomOutB(){zB=Math.max(0.5,zB-0.1);document.getElementById("backPdf").style.transform=`scale(${zB})`;}
-
-/* theme */
-function toggleTheme(){
-document.body.classList.toggle("dark");
-document.getElementById("themeBtn").textContent =
-document.body.classList.contains("dark") ? "☾" : "☀";
-}
-
+const savedTheme = localStorage.getItem("sp_theme") || "parchment";
+setTheme(savedTheme);
+renderPresetChips();
 calc();
 
-</script>
+/* close dropdown on outside click */
+document.addEventListener("click", e => {
+  const wrap = document.getElementById("themeWrap");
+  if (!wrap.contains(e.target)) wrap.classList.remove("open");
+});
 
+/* ══ THEME ══ */
+function toggleThemeDropdown() {
+  document.getElementById("themeWrap").classList.toggle("open");
+}
+
+function setTheme(name) {
+  document.body.removeAttribute("data-theme");
+  if (name !== "parchment") document.body.setAttribute("data-theme", name);
+  localStorage.setItem("sp_theme", name);
+  document.querySelectorAll(".theme-option").forEach(el => {
+    el.classList.toggle("active", el.dataset.t === name);
+  });
+  const meta = THEME_META[name] || THEME_META.parchment;
+  const dot = document.getElementById("triggerDot");
+  dot.style.background = meta.bg;
+  dot.style.borderColor = meta.dot;
+  document.getElementById("triggerLabel").textContent = meta.label;
+  document.getElementById("themeWrap").classList.remove("open");
+}
+
+/* ══ HELPERS ══ */
+function v(id) { return parseFloat(document.getElementById(id).value) || 0; }
+function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+function fmt(key, x) {
+  const cm = rowUnits[key] === "cm";
+  return (cm ? x*2.54 : x).toFixed(2) + (cm ? " cm" : "″");
+}
+function toggleUnit(key) { rowUnits[key] = rowUnits[key]==="cm" ? "in" : "cm"; calc(); }
+
+function mrow(key, label, val) {
+  const cm = rowUnits[key] === "cm";
+  return `<div class="mrow">
+    <span class="mrow-label">${label}</span>
+    <div class="mrow-right">
+      <span class="mrow-value">${fmt(key,val)}</span>
+      <span class="unit-pill${cm?" cm":""}" onclick="toggleUnit('${key}')">${cm?"cm":"in"}</span>
+    </div>
+  </div>`;
+}
+
+/* ══ CALCULATIONS ══ */
+function computeAll() {
+  const wbw=v("waistbandwidth"), waist=v("waist"), seat=v("seat");
+  const rise=v("rise")+0.5, lo=v("legOpening"), tl=v("totalLength");
+  const crotch=rise-wbw, riseV=crotch, seatV=crotch*0.75;
+  const seatH=seat*0.25+1, riseH=seatH+(seat*0.125-0.5)/2;
+  const waistband=waist*0.25+0.5, bwaistband=waist*0.25+1;
+  const legLen=tl-riseV;
+  const seatOffset=(seat*0.125-0.5)/4;
+  const backRiseH=seatH+seatOffset+(seat*0.125-0.5)/2+seatOffset;
+  const fp=[
+    ["outseam","Outseam",tl],
+    ["riseV","Rise Vertical",riseV],
+    ["seatV","Seat Vertical",seatV],
+    ["riseH","Rise Horizontal",riseH],
+    ["seatH","Seat Horizontal",seatH],
+    ["waistband","Waistband",waistband],
+    ["fp1","1st Point — Length",legLen*0.4],
+    ["fp1o","1st Point — Opening",(lo*2+1)*0.45],
+    ["fp2","2nd Point — Length",legLen*0.3],
+    ["fp2o","2nd Point — Opening",(lo*2)*0.45],
+    ["fp3","3rd Point — Length",legLen*0.3],
+    ["fp3o","3rd Point — Opening",(lo*2)*0.45],
+  ];
+  const bp=[
+    ["boutseam","Outseam",tl],
+    ["briseV","Rise Vertical",riseV],
+    ["bseatV","Seat Vertical",seatV],
+    ["boffset","Seat Offset",seatOffset],
+    ["bRiseH","Rise Horizontal",backRiseH],
+    ["bwaistband","Waistband",bwaistband],
+    ["bp1","1st Point — Length",legLen*0.4],
+    ["bp1o","1st Point — Opening",(lo*2+1)*0.55],
+    ["bp2","2nd Point — Length",legLen*0.3],
+    ["bp2o","2nd Point — Opening",(lo*2)*0.55],
+    ["bp3","3rd Point — Length",legLen*0.3],
+    ["bp3o","3rd Point — Opening",(lo*2)*0.55],
+  ];
+  return {wbw,waist,seat,rise:v("rise"),lo,tl,riseV,seatV,seatH,riseH,waistband,bwaistband,backRiseH,seatOffset,legLen,fp,bp};
+}
+
+function calc() {
+  const wbw=v("waistbandwidth"),waist=v("waist"),seat=v("seat"),
+        rise=v("rise"),lo=v("legOpening"),tl=v("totalLength");
+  const hasData=wbw||waist||seat||rise||lo||tl;
+  if (!hasData) {
+    ["front","back"].forEach(p=>{
+      document.getElementById(p).innerHTML='<p class="empty-state">Enter measurements to calculate</p>';
+      document.getElementById("copy"+cap(p)).style.display="none";
+    });
+    document.getElementById("fabricEstimate").innerHTML='<p class="empty-state">Enter measurements to estimate yardage</p>';
+    document.getElementById("warnings").innerHTML="";
+    return;
+  }
+  const d=computeAll();
+  lastCalc=d;
+  const warns=[];
+  if (waist>seat) warns.push("Waist is wider than seat — check measurements");
+  if (rise<wbw)  warns.push("Rise is shorter than waistband width");
+  if (lo>seat*0.5) warns.push("Leg opening seems wide relative to seat");
+  if (tl<rise+10)  warns.push("Total length seems short for the rise");
+  document.getElementById("warnings").innerHTML=warns.map(w=>`<div class="warn-chip">⚠ ${w}</div>`).join("");
+  document.getElementById("waist").classList.toggle("warn-input",waist>seat);
+  document.getElementById("rise").classList.toggle("warn-input",rise<wbw);
+  const fabW = parseFloat(document.getElementById("fab_width").value);
+  if (!fabW) {
+    document.getElementById("fabricEstimate").innerHTML=`<p class="empty-state">Enter fabric width above to estimate yardage</p>`;
+  } else {
+    const widerPanel = Math.max(d.riseH, d.backRiseH);
+    const panelsPerRow = Math.floor(fabW / widerPanel);
+    if (panelsPerRow < 1) {
+      document.getElementById("fabricEstimate").innerHTML=`<div class="warn-chip" style="margin:0">⚠ Fabric width (${fabW}″) is narrower than the widest panel (${widerPanel.toFixed(2)}″)</div>`;
+    } else {
+      const rowsNeeded = Math.ceil(4 / panelsPerRow);
+      const totalIn = rowsNeeded * tl;
+      const yards = (totalIn / 36).toFixed(2);
+      const meters = (totalIn / 39.37).toFixed(2);
+      document.getElementById("fabricEstimate").innerHTML=`
+        <div class="fabric-row" style="margin-bottom:8px">
+          <span class="fl">Minimum yardage (${fabW}″ wide, ${panelsPerRow} panel${panelsPerRow>1?"s":""}/row × ${rowsNeeded} rows)</span>
+          <span class="fv">${yards} yd</span>
+        </div>
+        <div class="fabric-row">
+          <span class="fl">Metric equivalent</span>
+          <span class="fv">${meters} m</span>
+        </div>`;
+    }
+  }
+  document.getElementById("front").innerHTML=d.fp.map(([k,l,val])=>mrow(k,l,val)).join("");
+  document.getElementById("copyFront").style.display="";
+  document.getElementById("back").innerHTML=d.bp.map(([k,l,val])=>mrow(k,l,val)).join("");
+  document.getElementById("copyBack").style.display="";
+  renderCompareA(d);
+}
+
+/* ══ SEAMS ══ */
+function resetSeams() {
+  const SEAM_DEFAULTS = {sa_flatfelled:"5/8″",sa_back_out:"1″",sa_front_out:"0″",sa_waistband:"½″",sa_curve_str:"¼″",sa_curve_crv:"½″"};
+  Object.entries(SEAM_DEFAULTS).forEach(([id,val])=>{ document.getElementById(id).value=val; });
+}
+function resetFabric() {
+  document.getElementById("fab_width").value = "";
+  calc();
+}
+
+/* ══ COMPARE ══ */
+function renderCompareA(d) {
+  if (!d||!d.fp) return;
+  document.getElementById("cmp-a").innerHTML=d.fp.map(([k,l,val])=>
+    `<div class="mrow"><span class="mrow-label">${l}</span><span class="mrow-value" style="flex-shrink:0">${val.toFixed(2)}″</span></div>`
+  ).join("");
+}
+
+function renderCompareB(p) {
+  cmpPreset=p;
+  const d=computeFromPreset(p);
+  if (!d) return;
+  document.getElementById("cmp-b").innerHTML=d.fp.map(([k,l,val])=>
+    `<div class="mrow"><span class="mrow-label">${l}</span><span class="mrow-value" style="flex-shrink:0">${val.toFixed(2)}″</span></div>`
+  ).join("");
+  renderDiff(d);
+}
+
+function renderDiff(dB) {
+  const dA=lastCalc;
+  if (!dA.fp||!dB.fp) return;
+  document.getElementById("cmp-diff-card").style.display="";
+  document.getElementById("cmp-diff").innerHTML=dA.fp.map(([k,l,valA],i)=>{
+    const valB=dB.fp[i]?.[2]??0;
+    const diff=valA-valB;
+    const cls=Math.abs(diff)<0.01?"zero":diff>0?"pos":"neg";
+    const sign=diff>0?"+":"";
+    return `<div class="compare-row">
+      <span class="cr-label">${l}</span>
+      <div class="cr-vals">
+        <span class="cr-a">${valA.toFixed(2)}″</span>
+        <span class="cr-b">${valB.toFixed(2)}″</span>
+        <span class="cr-diff ${cls}">${sign}${diff.toFixed(2)}″</span>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+function computeFromPreset(p) {
+  const wbw=p.waistbandwidth||0,waist=p.waist||0,seat=p.seat||0,
+        riseRaw=p.rise||0,lo=p.legOpening||0,tl=p.totalLength||0;
+  const rise=riseRaw+0.5,crotch=rise-wbw,riseV=crotch;
+  const seatH=seat*0.25+1,legLen=tl-riseV;
+  const waistband=waist*0.25+0.5,bwaistband=waist*0.25+1;
+  const seatOffset=(seat*0.125-0.5)/4;
+  const backRiseH=seatH+seatOffset+(seat*0.125-0.5)/2+seatOffset;
+  const fp=[
+    ["outseam","Outseam",tl],["riseV","Rise Vertical",riseV],
+    ["seatV","Seat Vertical",crotch*0.75],["riseH","Rise Horizontal",seatH+(seat*0.125-0.5)/2],
+    ["seatH","Seat Horizontal",seatH],["waistband","Waistband",waistband],
+    ["fp1","1st Point — Length",legLen*0.4],["fp1o","1st Point — Opening",(lo*2+1)*0.45],
+    ["fp2","2nd Point — Length",legLen*0.3],["fp2o","2nd Point — Opening",(lo*2)*0.45],
+    ["fp3","3rd Point — Length",legLen*0.3],["fp3o","3rd Point — Opening",(lo*2)*0.45],
+  ];
+  return {fp,bp:[],waistband,bwaistband,riseV,seatH,backRiseH,seatOffset,legLen,lo,tl};
+}
+
+/* ══ PRESETS ══ */
+function savePreset() {
+  const name=document.getElementById("presetName").value.trim();
+  if (!name) return;
+  presets[name]={};
+  FIELDS.forEach(f=>{presets[name][f]=v(f);});
+  localStorage.setItem("sp_presets",JSON.stringify(presets));
+  document.getElementById("presetName").value="";
+  addHistory("Preset saved",name);
+  renderPresetChips(name);
+}
+function loadPreset(name) {
+  const p=presets[name]; if (!p) return;
+  FIELDS.forEach(f=>{
+    const el=document.getElementById(f);
+    if(el){el.value=p[f]||"";prevValues[f]=el.value;}
+  });
+  addHistory("Preset loaded",name);
+  calc(); renderPresetChips(name);
+}
+function deletePreset(name,e) {
+  e.stopPropagation();
+  delete presets[name];
+  localStorage.setItem("sp_presets",JSON.stringify(presets));
+  renderPresetChips();
+}
+function renderPresetChips(active) {
+  const names=Object.keys(presets);
+  const html=names.length
+    ? names.map(n=>`<span class="preset-chip${n===active?" active":""}" onclick="loadPreset('${n}')">${n}<span class="del" onclick="deletePreset('${n}',event)">✕</span></span>`).join("")
+    : `<span style="font-size:12px;color:var(--muted);font-style:italic">No presets saved yet</span>`;
+  document.getElementById("presetChips").innerHTML=html;
+  const cmpHtml=names.length
+    ? names.map(n=>`<span class="preset-chip" onclick="loadCmpPreset('${n}')">${n}</span>`).join("")
+    : `<span style="font-size:12px;color:var(--muted);font-style:italic">Save presets on Calculator tab</span>`;
+  document.getElementById("cmpPresetChips").innerHTML=cmpHtml;
+}
+function loadCmpPreset(name) { renderCompareB(presets[name]); }
+
+/* ══ HISTORY ══ */
+function addHistory(change,val) {
+  const time=new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"});
+  changeLog.unshift({time,change,val});
+  if(changeLog.length>60) changeLog.pop();
+  localStorage.setItem("sp_history",JSON.stringify(changeLog));
+  if(currentTab==="history") renderHistory();
+}
+function renderHistory() {
+  const el=document.getElementById("historyList");
+  el.innerHTML=changeLog.length
+    ? changeLog.map(h=>`<div class="history-item"><span class="hi-time">${h.time}</span><span class="hi-change">${h.change}</span><span class="hi-val">${h.val}</span></div>`).join("")
+    : '<p class="empty-state">No changes yet</p>';
+}
+function clearHistory() { changeLog=[]; localStorage.setItem("sp_history","[]"); renderHistory(); }
+
+/* ══ TABS ══ */
+const TABS=["calc","compare","history"];
+function switchTab(name) {
+  currentTab=name;
+  TABS.forEach(t=>{ document.getElementById("tab-"+t).style.display=t===name?"":"none"; });
+  document.querySelectorAll(".tab").forEach((el,i)=>el.classList.toggle("active",TABS[i]===name));
+  if(name==="history") renderHistory();
+  if(name==="compare") renderCompareA(lastCalc.fp?lastCalc:null);
+}
+
+/* ══ COPY / EXPORT / PRINT ══ */
+function copyPanel(panelId) {
+  const rows=[...document.getElementById(panelId).querySelectorAll(".mrow")];
+  const text=rows.map(r=>r.querySelector(".mrow-label").textContent.trim()+": "+r.querySelector(".mrow-value").textContent.trim()).join("\n");
+  navigator.clipboard.writeText(text).then(()=>{
+    const btn=document.getElementById("copy"+cap(panelId));
+    btn.textContent="Copied!"; btn.classList.add("ok");
+    setTimeout(()=>{btn.textContent="Copy all";btn.classList.remove("ok");},1800);
+  });
+}
+function exportJSON() {
+  const SEAM_DEFAULTS = {sa_flatfelled:"5/8″",sa_back_out:"1″",sa_front_out:"0″",sa_waistband:"½″",sa_curve_str:"¼″",sa_curve_crv:"½″"};
+  const data={measurements:{},presets,notes,seams:{},fabric:{},exported:new Date().toISOString()};
+  FIELDS.forEach(f=>{data.measurements[f]=v(f);});
+  Object.keys(SEAM_DEFAULTS).forEach(id=>{data.seams[id]=document.getElementById(id).value;});
+  data.fabric={fab_width:document.getElementById("fab_width").value};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+  const url=URL.createObjectURL(blob);
+  Object.assign(document.createElement("a"),{href:url,download:"selvedge-pattern.json"}).click();
+  setTimeout(()=>URL.revokeObjectURL(url),2000);
+}
+function printPage() { window.print(); }
+function saveNotes() {
+  notes.front=document.getElementById("notesFront").value;
+  notes.back=document.getElementById("notesBack").value;
+  localStorage.setItem("sp_notes",JSON.stringify(notes));
+}
+
+/* ══ MODAL / ZOOM ══ */
+function openModal(p)  { document.getElementById("modal-"+p).classList.add("open"); }
+function closeModal(p) {
+  document.getElementById("modal-"+p).classList.remove("open");
+  if (p==="easing") { const v=document.getElementById("easingVideo"); if(v) v.pause(); }
+}
+function zoom(panel,delta) {
+  zoomLevels[panel]=Math.max(0.4,Math.min(3,zoomLevels[panel]+delta));
+  document.getElementById("pdf-"+panel).style.transform=`scale(${zoomLevels[panel]})`;
+}
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape"){closeModal("front");closeModal("back");closeModal("easing");}
+});
+
+/* ══ VIDEO PLACEHOLDER ══ */
+(function(){
+  const vid=document.getElementById("easingVideo");
+  const ph=document.getElementById("videoPlaceholder");
+  vid.addEventListener("loadedmetadata",()=>{ ph.style.display="none"; vid.style.display="block"; });
+  vid.addEventListener("error",()=>{ ph.style.display="flex"; vid.style.display="none"; });
+  vid.style.display="block";
+})();
+</script>
 </body>
 </html>
