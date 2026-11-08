@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f6f3ed"><meta name="description" content="A visual measuring guide for your body or a favourite pair of jeans. Made for the Selvedge pattern calculator.">
+<title>How to measure — Selvedge</title><link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="stylesheet" href="app.css"><link rel="stylesheet" href="measure.css"><script type="module" src="measure.js"></script>
+</head><body class="guide-page">
+<a class="skip-link" href="#lesson">Skip to the measuring lesson</a>
+<header class="appbar"><a class="brand" href="./#measure" aria-label="Selvedge calculator"><span class="brand-mark" aria-hidden="true">s<span>∕</span></span><span>SELVEDGE<small>Pattern notebook</small></span></a><a class="back-calculator" href="./#measure">← Calculator</a></header>
+<main class="shell guide-shell">
+ <div class="guide-heading"><p class="eyebrow">THE FIELD GUIDE / MEASURING</p><h1>Good fit starts here.</h1><p>Follow the tape. Keep the number. Know where it goes.</p></div>
+ <div class="guide-tabs" role="tablist" aria-label="What are you measuring?">
+  <button type="button" role="tab" id="bodyTab" aria-selected="true" aria-controls="bodyPanel" tabindex="0" data-tab="body"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="4" r="2.3"/><path d="M8 9h8l2 7M8 9l-2 7m3-3 1 8m5-8-1 8M9 13h6"/></svg><span>Body<small>Measure yourself</small></span></button>
+  <button type="button" role="tab" id="jeansTab" aria-selected="false" aria-controls="jeansPanel" tabindex="-1" data-tab="jeans"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12l1 7-2 11h-5l-1-10-1 10H5L4 10Z M6 6h12M11 3v8"/></svg><span>Jeans<small>Copy a pair you like</small></span></button>
+ </div>
+ <section id="bodyPanel" role="tabpanel" aria-labelledby="bodyTab" tabindex="0"></section>
+ <section id="jeansPanel" role="tabpanel" aria-labelledby="jeansTab" tabindex="0" hidden></section>
+ <div class="guide-workspace" id="guideWorkspace">
+  <aside class="lesson-sidebar" aria-label="Measuring steps"><p class="step">CHOOSE A MEASUREMENT</p><nav id="lessonNav" aria-label="Measurements"></nav><div class="kit-note" id="kitNote"></div></aside>
+  <article class="lesson-card" id="lesson" aria-labelledby="lessonTitle">
+   <header class="lesson-heading"><div><p class="step" id="lessonCount"></p><h2 id="lessonTitle"></h2></div><span class="lesson-type" id="lessonType"></span></header>
+   <div class="lesson-layout"><figure class="measurement-figure"><div id="measurementVisual"></div><figcaption id="visualCaption"></figcaption></figure><div class="lesson-instructions"><p class="lesson-intro" id="lessonIntro"></p><ol class="measuring-steps" id="measuringSteps"></ol><div class="technique-tip"><span aria-hidden="true">✓</span><p id="techniqueTip"></p></div></div></div>
+   <div class="calculator-mapping"><div><p class="step">IN YOUR CALCULATOR</p><div id="entryTags" class="entry-tags"></div><p id="entryExample"></p></div><a class="button" id="enterMeasurement" href="./#measure">Go to field →</a></div>
+   <div class="lesson-extra" id="lessonExtra"></div>
+   <div class="lesson-footer"><a id="lessonReference" target="_blank" rel="noopener">Measuring reference ↗</a><span>Illustrations show placement, not scale.</span></div>
+   <nav class="lesson-pagination" aria-label="Move between lessons"><button type="button" id="previousLesson">← Previous</button><span id="lessonProgress"></span><button type="button" id="nextLesson">Next →</button></nav>
+  </article>
+ </div>
+ <section class="guide-reminder"><div><p class="step">ONE IMPORTANT DISTINCTION</p><h2>Straight down. Along the curve.</h2><p>Vertical depth positions the crotch line. Curved front rise checks the drawn seam. Record them separately.</p></div><div class="depth-rise-key"><span><i class="straight-symbol" aria-hidden="true">↕</i>Vertical crotch depth</span><span><i class="curve-symbol" aria-hidden="true">⌒</i>Curved front rise</span></div></section>
+ <details class="guide-references disclosure"><summary>Measuring references <span>Where the methods come from</span></summary><div class="details-body"><p>Original illustrations and instructions adapted to this calculator’s fields. Our shared vertical reference is the top of the intended waistband. A natural-waist draft uses the natural waist; a lower-rise draft needs its own marked starting level.</p><ul><li><a href="https://freesewing.eu/docs/measurements/waist/" target="_blank" rel="noopener">FreeSewing — waist measurement</a></li><li><a href="https://freesewing.eu/docs/measurements/seat/" target="_blank" rel="noopener">FreeSewing — full seat</a></li><li><a href="https://freesewing.eu/docs/measurements/crotchdepth/" target="_blank" rel="noopener">FreeSewing — seated crotch depth</a></li><li><a href="https://pubs.nmsu.edu/_c/C227/index.html" target="_blank" rel="noopener">NMSU — pants measurements and ease</a></li><li><a href="https://toddshelton.com/jeans/classic-12-charcoal" target="_blank" rel="noopener">Todd Shelton — measuring finished jeans</a></li><li><a href="https://williamsburggarment.com/how-to-measure/" target="_blank" rel="noopener">Williamsburg Garment Company — jeans measurements</a></li><li><a href="https://luxire.de/en/pages/measurement-guide" target="_blank" rel="noopener">Luxire — outside length</a></li><li><a href="https://freesewing.eu/docs/measurements/waisttoseat/" target="_blank" rel="noopener">FreeSewing — waist-to-seat height</a></li></ul><p>Garment brands use different measuring stations. Record your own seat and knee positions so future measurements stay comparable. The illustrations are a guide to tape placement, not a pattern or a fit guarantee.</p></div></details>
+ <footer class="footer"><span>SELVEDGE / MEASURE ONCE, RECORD CLEARLY</span><a href="./#measure">Back to your calculator ↗</a><span id="guideOfflineState">Works with your saved notebook</span></footer>
+</main><noscript><div class="noscript">Enable JavaScript to view the illustrated measuring lessons.</div></noscript>
+</body></html>

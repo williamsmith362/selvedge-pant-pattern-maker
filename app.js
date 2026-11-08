@@ -204,5 +204,14 @@ const observer=new IntersectionObserver(entries=>{const visible=entries.filter(e
 for(const id of ['measure','draft','cloth'])observer.observe($(id));
 window.addEventListener('pagehide',persist);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')persist();});
 syncInputs();renderProfiles();render();persist();
+// Tutorial links focus only a known field. Visiting a lesson never edits a draft.
+const tutorialField=new URLSearchParams(location.search).get('field');
+if(fieldKinds.has(tutorialField)){
+ const input=$(domId(tutorialField)),details=input.closest('details');
+ if(details)details.open=true;
+ input.closest('.field').classList.add('guided-field');
+ requestAnimationFrame(()=>{input.focus({preventScroll:true});input.scrollIntoView({block:'center',behavior:'instant'});});
+ input.addEventListener('input',()=>input.closest('.field').classList.remove('guided-field'),{once:true});
+}
 if(state.profiles.some(p=>p.draft.depth===null&&p.draft.frontRise!==null))toast('Your old presets are here. Add vertical depth when you load one.');
 if('serviceWorker'in navigator){navigator.serviceWorker.register('./sw.js').then(()=>navigator.serviceWorker.ready).then(()=>{$('offlineState').textContent='Ready for offline use · Saved on this device';}).catch(()=>{$('offlineState').textContent='Local saves · Internet needed to reopen';});}
