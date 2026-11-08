@@ -1,0 +1,7 @@
+{
+  "name": "selvedge-pattern-notebook",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {"test":"node --test tests/model.test.js"}
+}
