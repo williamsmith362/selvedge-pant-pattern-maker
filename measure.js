@@ -23,8 +23,6 @@ const lessons={
 };
 let mode='body',index=0;
 const positions={body:0,jeans:0};
-try{const s=JSON.parse(localStorage.getItem('sp_workspace_v2'));if(['parchment','indigo','midnight'].includes(s?.theme))document.documentElement.dataset.theme=s.theme;}catch{}
-document.querySelector('meta[name=theme-color]').content=getComputedStyle(document.documentElement).getPropertyValue('--paper').trim()||'#f6f3ed';
 function setURL(){const u=new URL(location.href);u.searchParams.set('tab',mode);u.searchParams.set('step',lessons[mode][index].id);history.replaceState(null,'',u.pathname+u.search+u.hash);}
 function render({scroll=false}={}){
  const lesson=lessons[mode][index];positions[mode]=index;

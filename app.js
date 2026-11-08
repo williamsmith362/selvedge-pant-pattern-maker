@@ -72,9 +72,8 @@ function syncInputs(){
  for(const [key,kind]of fieldKinds){const v=getValue(key);$(domId(key)).value=kind==='ratio'?(v===null?'':Number((v*100).toFixed(4))):kind==='percent'?(v??''):formatNumber(v,state.unit);}
  for(const [key,value]of Object.entries({waist:32,seat:40,depth:12,length:42,opening:8}))$(key).placeholder=formatNumber(value,state.unit);
  for(const key of ['waistSource','seatSource','waistFlat','seatFlat','lengthOrigin'])$(key).value=String(state.draft[key]);
- $('draftNotes').value=state.draft.notes;$('themeSelect').value=state.theme;$('fractionToggle').checked=state.fractions;
- document.documentElement.dataset.theme=state.theme;
- document.querySelector('meta[name=theme-color]').content=state.theme==='parchment'?'#f6f3ed':state.theme==='indigo'?'#111f2d':'#191b1c';
+ $('draftNotes').value=state.draft.notes;$('fractionToggle').checked=state.fractions;
+ document.dispatchEvent(new CustomEvent('appearance:apply',{detail:state.theme}));
  document.querySelectorAll('[data-unit]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.unit===state.unit)));
  document.querySelectorAll('.input-unit').forEach(e=>e.textContent=state.unit);
  updateSources();
@@ -157,7 +156,7 @@ document.querySelectorAll('[data-unit]').forEach(b=>b.addEventListener('click',(
  state.unit=b.dataset.unit;syncInputs();render();persist();
 }));
 $('fractionToggle').addEventListener('change',e=>{state.fractions=e.target.checked;render();persist();});
-$('themeSelect').addEventListener('change',e=>{state.theme=e.target.value;syncInputs();persist();});
+document.addEventListener('appearance:change',event=>{state.theme=event.detail.theme;if(!event.detail.external)persist();});
 function replaceDraft(d,activeId=null){state.draft=normalizeDraft(d);state.activeId=activeId;inputErrors.clear();touched.clear();syncInputs();renderProfiles();render();persist();}
 $('loadExample').addEventListener('click',()=>{
  if(state.draft.waist!==null&&!confirm('Replace the current workspace with the example? Saved drafts stay in your notebook.'))return;

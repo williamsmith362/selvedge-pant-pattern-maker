@@ -51,6 +51,8 @@ The **How to measure** link opens `measure.html`, with **Body** and **Jeans** ta
 
 The interface follows saved draft → measurements → front/back results → fabric planning. System typography, readable phone controls and subtle dividers keep the everyday path clear. **Test measurements** stays visible beside the measurement heading, and the front/back reference diagram appears above calculated results. Fit details, proportions, notes, formulas and cutting allowances remain in labeled expandable sections. The tutorial shows preparation at the first step and keeps it available in **Before you measure** throughout.
 
+Both headers show **Yousef Husari** with the supplied YH monogram, rendered dark in light mode and white in dark mode. The sun/moon button replaces the appearance menu and remembers the choice across the calculator, guide, reloads and browser-back navigation. Existing saved theme values remain supported. Changing appearance preserves draft data and any unfinished input.
+
 - Current measurements autosave to `sp_workspace_v2` on the same browser origin. Named drafts are saved snapshots and update when **Save draft** is used.
 - Existing `sp_presets`, `sp_notes`, and `sp_history` are retained. Old presets migrate with their old rise stored as a curved target; vertical depth is intentionally left blank. Confirm their measurement sources and length convention before using them.
 - Backup export includes current workspace, named drafts, notes, allowances and the old data. Import accepts old exports and new backups, merging named drafts instead of deleting the notebook.
