@@ -63,7 +63,7 @@ for(const [container,definitions]of Object.entries(fieldDefinitions)){
  $(container).innerHTML=definitions.map(([key,label,help,kind='length'])=>{
    const id=domId(key);fieldKinds.set(key,kind);
    let extra='';
-   if(kind==='circumference')extra=`<div class="field-options"><select id="${key}Source" data-field="${key}Source" aria-label="${label} measurement source"><option value="garment">Pants</option><option value="body">Body</option></select><select id="${key}Flat" data-field="${key}Flat" aria-label="${label} measurement format"><option value="false">Around</option><option value="true">Laid flat ×2</option></select></div><span class="target-note" id="${key}Target"></span>`;
+   if(kind==='circumference')extra=`<div class="field-options"><select id="${key}Mode" data-measurement="${key}" aria-label="${label} measurement type"><option value="garment-around">Pants · around</option><option value="garment-flat">Pants · flat ×2</option><option value="body-around">Body · around</option></select><input id="${key}Source" type="hidden" value="garment"><input id="${key}Flat" type="hidden" value="false"></div><span class="target-note" id="${key}Target"></span>`;
    if(kind==='lengthOrigin')extra='<select class="under-select" id="lengthOrigin" data-field="lengthOrigin" aria-label="Total length starts at"><option value="top">Includes band</option><option value="below">Below band</option></select>';
    return `<div class="field"><label for="${id}">${label}<span class="${['ratio','percent'].includes(kind)?'':'input-unit'}">${['ratio','percent'].includes(kind)?'%':state.unit}</span></label><input id="${id}" data-field="${key}" inputmode="decimal" type="text" autocomplete="off" aria-describedby="${id}Help ${id}Error" placeholder="${['waist','seat','depth','length','opening'].includes(key)?({waist:32,seat:40,depth:12,length:42,opening:8}[key]):'—'}">${extra}<span class="field-help" id="${id}Help">${help}</span><span class="field-error" id="${id}Error"></span></div>`;
  }).join('');
@@ -79,7 +79,7 @@ function syncInputs(){
  document.querySelectorAll('.input-unit').forEach(e=>e.textContent=state.unit);
  updateSources();
 }
-function updateSources(){for(const k of ['waist','seat']){const body=state.draft[`${k}Source`]==='body';$(k+'Flat').disabled=body;$(k+'Ease').disabled=!body;}}
+function updateSources(){for(const k of ['waist','seat']){const body=state.draft[`${k}Source`]==='body';$(k+'Mode').value=body?'body-around':state.draft[`${k}Flat`]?'garment-flat':'garment-around';$(k+'Source').value=state.draft[`${k}Source`];$(k+'Flat').value=String(state.draft[`${k}Flat`]);$(k+'Ease').disabled=!body;}}
 function renderProfiles(){
  for(const [id,blank,value]of [['profileSelect','Unsaved draft',state.activeId],['compareSelect','Choose a saved draft',state.comparisonId]]){
   const select=$(id);select.replaceChildren(new Option(blank,''));
@@ -102,11 +102,12 @@ function render(){
  $('notesIndicator').textContent=state.draft.notes?'Saved with this draft':'Optional';
  if(!result.valid){
   const messages=[...new Set(Object.values(result.errors))];
-  $('results').innerHTML=`<div class="empty-draft"><div class="empty-inner"><span class="empty-icon" aria-hidden="true">↗</span><h3>Give your draft a shape.</h3><p>Complete the measurements to see your front and back together.</p><div class="missing-list">${messages.map(escapeHTML).join('<br>')}</div></div></div>`;
+  $('results').innerHTML=`<div class="empty-draft"><div class="empty-inner"><h3>Your draft measurements</h3><p>Enter your measurements to calculate the front and back panels.</p><div class="missing-list">${messages.map(escapeHTML).join('<br>')}</div></div></div>`;
  }else{
   const share=Math.round(state.draft.frontShare*100);
-  $('results').innerHTML=`<div class="draft-summary"><div><small>Waist target</small><strong>${fl(result.W)}</strong></div><div><small>Seat target</small><strong>${fl(result.H)}</strong></div><div><small>Leg split · F / B</small><strong>${share} / ${100-share}</strong></div></div>${draftMap()}<table class="measure-table"><caption>Per panel · add cutting allowances separately</caption><thead><tr><th scope="col">Measurement</th><th scope="col">Front</th><th scope="col">Back</th></tr></thead><tbody>${result.rows.map((r,i)=>`<tr class="${i===7?'group-start ':''}${r.key==='hem'?'highlight':''}"><td>${r.label}</td><td>${fl(r.f)}</td><td>${fl(r.b)}</td></tr>`).join('')}</tbody></table><p class="table-note">Lengths below the crotch are consecutive vertical sections. The sketch is a reference map, not a scaled cutting pattern. Waist widths are allocations to true along your shaped waist edge.</p><p class="table-note">${state.draft.hipDepth===null?'Seat height is estimated. ':''}${state.draft.kneeDistance===null||state.draft.kneeWidth===null?'Knee uses starting proportions. ':''}${state.draft.frontRise!==null?`Curved front-rise target: ${fl(state.draft.frontRise)}; check it on your drawn seam. `:''}${state.draft.seams.frontOut===0||state.draft.seams.backOut===0?'Zero outseam allowance: confirm the selvedge stitching position.':''}</p>`;
+  $('results').innerHTML=`<div class="draft-summary"><div><small>Waist target</small><strong>${fl(result.W)}</strong></div><div><small>Seat target</small><strong>${fl(result.H)}</strong></div><div><small>Leg split · F / B</small><strong>${share} / ${100-share}</strong></div></div><figure class="draft-visual">${draftMap()}<figcaption>Reference diagram · not a scaled cutting pattern</figcaption></figure><table class="measure-table"><caption>Per panel · add cutting allowances separately</caption><thead><tr><th scope="col">Measurement</th><th scope="col">Front</th><th scope="col">Back</th></tr></thead><tbody>${result.rows.map((r,i)=>`<tr class="${i===7?'group-start ':''}${r.key==='hem'?'highlight':''}"><td>${r.label}</td><td>${fl(r.f)}</td><td>${fl(r.b)}</td></tr>`).join('')}</tbody></table><p class="table-note">${state.draft.hipDepth===null?'Seat height is estimated. ':''}${state.draft.kneeDistance===null||state.draft.kneeWidth===null?'Knee uses starting proportions. ':''}${state.draft.frontRise!==null?`Curved front-rise target: ${fl(state.draft.frontRise)}; check it on your drawn seam. `:''}${state.draft.seams.frontOut===0||state.draft.seams.backOut===0?'Zero outseam allowance: confirm the selvedge stitching position.':''}</p>`;
  }
+ $("draftReference").innerHTML='<p class="table-note">Lengths below the crotch are consecutive vertical sections. The sketch is a reference map, not a scaled cutting pattern. Waist widths are allocations to true along your shaped waist edge.</p>';
  renderFormulas();renderComparison();renderFabric();
 }
 function renderFormulas(){
@@ -124,7 +125,7 @@ function renderComparison(){
 function renderFabric(){
  const plan=planFabric(result,state.draft);
  if(!plan.valid){$('fabricResult').innerHTML=`<div class="fabric-empty ${plan.neededWidth?'warning':''}"><div>${escapeHTML(plan.reason)}${plan.neededWidth?`<p class="fabric-detail">Required envelope: ${fl(plan.neededWidth)}<br>Usable width: ${fl(plan.usableWidth)}</p>`:''}</div></div>`;return;}
- $('fabricResult').innerHTML=`<p class="fabric-caption">PLANNING ESTIMATE · INCLUDING YOUR RESERVE</p><div class="fabric-metrics"><strong>${(Math.ceil(plan.yards*100)/100).toFixed(2)} yd</strong><span>${(Math.ceil(plan.meters*100)/100).toFixed(2)} m</span></div><div class="fabric-roll"><div class="fabric-roll-head"><span>SELVEDGE</span><span>${fl(plan.usableWidth)} usable</span><span>SELVEDGE</span></div>${plan.rows.map(row=>`<div class="fabric-row">${row.map(p=>`<div class="fabric-piece ${p.name==='Back'?'back':''}" style="width:${(p.width/plan.usableWidth*100).toFixed(3)}%">${p.name}</div>`).join('')}</div>`).join('')}</div><p class="fabric-detail">${plan.rows.length} rows × ${fl(result.cutLength)} panel envelopes<br>Leg-panel cloth: ${fl(plan.panelCloth)} + reserve: ${fl(state.draft.extraLength)}<br>Envelope widths · front ${fl(result.front.cutWidth)} / back ${fl(result.back.cutWidth)}</p><p class="fabric-limit">A conservative arrangement of four whole leg panels, with cutting allowances and up to two selvedge edges per row. Verify space for the waistband, yoke, fly, pockets and belt loops; the reserve is your allowance for these pieces. Curves and nesting can change the actual layout.${state.draft.shrinkLength||state.draft.shrinkWidth?' Purchase length accounts for your expected shrinkage before cutting.':''}</p>`;
+ $('fabricResult').innerHTML=`<p class="fabric-caption">Planning estimate · includes your reserve</p><div class="fabric-metrics"><strong>${(Math.ceil(plan.yards*100)/100).toFixed(2)} yd</strong><span>${(Math.ceil(plan.meters*100)/100).toFixed(2)} m</span></div><div class="fabric-roll"><div class="fabric-roll-head"><span>Selvedge</span><span>${fl(plan.usableWidth)} usable</span><span>Selvedge</span></div>${plan.rows.map(row=>`<div class="fabric-row">${row.map(p=>`<div class="fabric-piece ${p.name==='Back'?'back':''}" style="width:${(p.width/plan.usableWidth*100).toFixed(3)}%">${p.name}</div>`).join('')}</div>`).join('')}</div><p class="fabric-detail">${plan.rows.length} rows × ${fl(result.cutLength)} panel envelopes<br>Leg-panel cloth: ${fl(plan.panelCloth)} + reserve: ${fl(state.draft.extraLength)}<br>Envelope widths · front ${fl(result.front.cutWidth)} / back ${fl(result.back.cutWidth)}</p><p class="fabric-limit">A conservative arrangement of four whole leg panels, with cutting allowances and up to two selvedge edges per row. Verify space for the waistband, yoke, fly, pockets and belt loops; the reserve is your allowance for these pieces. Curves and nesting can change the actual layout.${state.draft.shrinkLength||state.draft.shrinkWidth?' Purchase length accounts for your expected shrinkage before cutting.':''}</p>`;
 }
 document.addEventListener('input',e=>{
  const el=e.target,key=el.dataset.field;if(!key||el.tagName==='SELECT')return;
@@ -137,6 +138,13 @@ document.addEventListener('input',e=>{
  render();scheduleSave();
 });
 document.addEventListener('change',e=>{
+ const measurement=e.target.dataset.measurement;
+ if(['waist','seat'].includes(measurement)){
+  const value=e.target.value;
+  state.draft[measurement+'Source']=value==='body-around'?'body':'garment';
+  state.draft[measurement+'Flat']=value==='garment-flat';
+  updateSources();render();scheduleSave();return;
+ }
  const el=e.target,key=el.dataset.field;if(!key||el.tagName!=='SELECT')return;
  if(['waistSource','seatSource','waistFlat','seatFlat','lengthOrigin'].includes(key)){
   state.draft[key]=key.endsWith('Flat')?el.value==='true':el.value;
@@ -153,7 +161,7 @@ $('themeSelect').addEventListener('change',e=>{state.theme=e.target.value;syncIn
 function replaceDraft(d,activeId=null){state.draft=normalizeDraft(d);state.activeId=activeId;inputErrors.clear();touched.clear();syncInputs();renderProfiles();render();persist();}
 $('loadExample').addEventListener('click',()=>{
  if(state.draft.waist!==null&&!confirm('Replace the current workspace with the example? Saved drafts stay in your notebook.'))return;
- replaceDraft({...clone(DEFAULT_DRAFT),waist:32,seat:40,depth:12,length:42,opening:8,fabricWidth:30,frontRise:12.5});toast('Example loaded. Replace these with your measurements.');
+ replaceDraft({...clone(DEFAULT_DRAFT),waist:32,seat:40,depth:12,length:42,opening:8,fabricWidth:30,frontRise:12.5});$('moreMenu').open=false;toast('Example loaded. Replace these with your measurements.');
 });
  $('profileSelect').addEventListener('change',e=>{const p=state.profiles.find(p=>p.id===e.target.value);if(!p){renderProfiles();return;}replaceDraft(p.draft,p.id);toast('Draft loaded. Edits autosave to your workspace; use Save draft to update the named copy.');});
 $('compareSelect').addEventListener('change',e=>{state.comparisonId=e.target.value||null;renderComparison();persist();});

@@ -4,7 +4,7 @@ A personal, mobile-first manual jeans drafting worksheet. Static HTML, CSS and J
 
 ## Use
 
-1. Choose **Pants** or **Body** independently for waist and seat. Enter full circumferences, or select **Laid flat ×2** for garment measurements. Body measurements are circumferences. Body ease is explicit in Fit details and is not added to garment inputs.
+1. Choose **Pants · around**, **Pants · flat ×2**, or **Body · around** independently for waist and seat. Body ease is explicit in Fit details and is not added to garment inputs.
 2. Enter finished band height, **vertical crotch depth** from the top of the intended waistband, total length, and one hem's flat opening. State whether total length includes the band. A curved front-rise measurement is an optional reference target, never a substitute for vertical depth.
 3. Read the front/back stitching-line dimensions. Add cutting allowances outside these lines. True waist curves and check curved seam lengths on the actual draft.
 4. Use the cloth planner for a conservative arrangement of four panel envelopes. It allows at most two selvedge-anchored panels per row. Enter a reserve and check that the actual waistband, yoke, fly, pockets, belt loops, and any extra back-rise shaping fit the layout.
@@ -47,7 +47,9 @@ This estimates the displayed rectangular envelopes, not a production cutting mar
 
 ## Saved data and iPhone
 
-The **Measuring tutorial** button opens `measure.html`, with **Body** and **Jeans** tabs. Fourteen lessons use original annotated vector illustrations, calculator-specific field mapping, direct links to the correct input, keyboard-accessible tabs, and linked primary measuring references. Tutorial navigation never changes measurements or source settings. The guide and illustration modules are cached for offline use with the calculator.
+The **How to measure** link opens `measure.html`, with **Body** and **Jeans** tabs. Fourteen lessons use original annotated vector illustrations, calculator-specific field mapping, direct links to the correct input, keyboard-accessible tabs, and linked primary measuring references. Tutorial navigation never changes measurements or source settings. The guide and illustration modules are cached for offline use with the calculator.
+
+The interface follows saved draft → measurements → front/back results → fabric planning. System typography, readable phone controls and subtle dividers keep the everyday path clear. **Test measurements** stays visible beside the measurement heading, and the front/back reference diagram appears above calculated results. Fit details, proportions, notes, formulas and cutting allowances remain in labeled expandable sections. The tutorial shows preparation at the first step and keeps it available in **Before you measure** throughout.
 
 - Current measurements autosave to `sp_workspace_v2` on the same browser origin. Named drafts are saved snapshots and update when **Save draft** is used.
 - Existing `sp_presets`, `sp_notes`, and `sp_history` are retained. Old presets migrate with their old rise stored as a curved target; vertical depth is intentionally left blank. Confirm their measurement sources and length convention before using them.

@@ -32,9 +32,10 @@ function render({scroll=false}={}){
  for(const name of ['body','jeans'])$(name+'Panel').hidden=name!==mode;
  $(mode+'Panel').append($('guideWorkspace'));
  $('lessonNav').innerHTML=lessons[mode].map((item,i)=>`<button type="button" data-lesson="${i}" ${index===i?'aria-current="step"':''}><span aria-hidden="true">${String(i+1).padStart(2,'0')}</span>${item.name}</button>`).join('');
- $('kitNote').innerHTML=mode==='body'?'<strong>Before you start</strong>Flexible tape, a marked waistline, a firm chair, and a helper or mirror. Wear thin clothing.':'<strong>Before you start</strong>A well-fitting pair, a flexible tape, and a flat table. Fasten the jeans and smooth them without stretching.';
- $('lessonCount').textContent=`${mode==='body'?'BODY':'JEANS'} / ${String(index+1).padStart(2,'0')} OF ${String(lessons[mode].length).padStart(2,'0')}`;
- $('lessonTitle').textContent=lesson.title;$('lessonType').textContent=lesson.type;
+ $('kitNote').innerHTML=mode==='body'?'Flexible tape, a marked waistline, a firm chair, and a helper or mirror. Wear thin clothing.':'A well-fitting pair, a flexible tape, and a flat table. Fasten the jeans and smooth them without stretching.';
+ $('preparation').open=index===0;
+ $('lessonCount').textContent=`Step ${index+1} of ${lessons[mode].length}`;
+ $('lessonTitle').textContent=lesson.id==='depth'?'Vertical crotch depth':lesson.id==='rise'?'Curved front rise':lesson.name;$('lessonType').textContent=lesson.type;
  $('measurementVisual').innerHTML=drawMeasurement(lesson.visual);$('visualCaption').textContent=lesson.caption;
  $('lessonIntro').textContent=lesson.intro;
  $('measuringSteps').replaceChildren(...lesson.steps.map(text=>{const li=document.createElement('li');li.textContent=text;return li;}));
