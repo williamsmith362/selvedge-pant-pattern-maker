@@ -1,6 +1,6 @@
 // Network first: new visits receive the current app; an installed copy works offline.
-const CACHE='selvedge-workroom-v2-5-app-icons';
-const FILES=['./','./index.html','./app.css','./app.js','./appearance.js','./assets/yh-monogram.png','./model.js','./measure.html','./measure.css','./measure.js','./measure-visuals.js','./manifest.webmanifest','./icon.svg','./favicon-32.png','./icon-192.png','./icon-512.png','./icon-maskable-512.png','./apple-touch-icon.png','./media/fpg.pdf','./media/bpg.pdf'];
+const CACHE='selvedge-workroom-v2-6-example-pdf';
+const FILES=['./','./index.html','./app.css','./app.js','./appearance.js','./assets/yh-monogram.png','./model.js','./measure.html','./measure.css','./measure.js','./measure-visuals.js','./manifest.webmanifest','./icon.svg','./favicon-32.png','./icon-192.png','./icon-512.png','./icon-maskable-512.png','./apple-touch-icon.png','./media/fpg.pdf','./media/bpg.pdf','./media/example-pattern.pdf'];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(FILES)).then(()=>self.skipWaiting()));});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('selvedge-workroom-')&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});
 self.addEventListener('fetch',event=>{

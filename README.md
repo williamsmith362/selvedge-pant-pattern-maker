@@ -35,7 +35,7 @@ All state is stored in inches. Unit changes only change input/output presentatio
 - `point 2 circumference = 2 × selected flat point 2`, defaulting to hem circumference
 - Each leg circumference is divided by the chosen front/back share.
 
-These are reference dimensions for a proportional manual block. Waist allocations must be trued along shaped edges. Seat offset is a construction reference rather than automatic curve generation. The app does not construct the actual crotch curves, center-back inclination, darts or yoke, or walk mating seams. The static PDF guides retain their original annotations and are not regenerated when measurements change. Their original hidden ease/allowance additions are no longer silently included in stitching targets.
+These are reference dimensions for a proportional manual block. Waist allocations must be trued along shaped edges. Seat offset is a construction reference rather than automatic curve generation. The app does not construct the actual crotch curves, center-back inclination, darts or yoke, or walk mating seams. The original front and back drawing guides retain their annotations. A separate two-page example worksheet lists every calculator output for the built-in test measurements. It is a fixed example, not a generated cutting pattern, and it does not change when your measurements change. The original guide allowances are not silently included in stitching targets.
 
 See [NMSU's distinction between crotch depth and crotch length](https://pubs.nmsu.edu/_c/C227/index.html).
 
