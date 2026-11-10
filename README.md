@@ -1,13 +1,13 @@
 # Selvedge pattern notebook
 
-A personal, mobile-first manual jeans drafting worksheet. Static HTML, CSS and JavaScript, with no build step or third-party runtime scripts. GitHub Pages publishes the existing `main` branch through the retained Pages workflow.
+A minimal, step-by-step jeans drafting worksheet with readable guidance, light/dark mode, saved drafts, and a visual fabric layout. Static HTML, CSS and JavaScript, with no build step or third-party runtime scripts. GitHub Pages publishes the existing `main` branch through the retained Pages workflow.
 
 ## Use
 
 1. Choose **Pants · around**, **Pants · flat ×2**, or **Body · around** independently for waist and seat. Body ease is explicit in Fit details and is not added to garment inputs.
 2. Enter finished band height, **vertical crotch depth** from the top of the intended waistband, total length, and one hem's flat opening. State whether total length includes the band. A curved front-rise measurement is an optional reference target, never a substitute for vertical depth.
 3. Read the front/back stitching-line dimensions. Add cutting allowances outside these lines. True waist curves and check curved seam lengths on the actual draft.
-4. Use the cloth planner for a conservative arrangement of four panel envelopes. It allows at most two selvedge-anchored panels per row. Enter a reserve and check that the actual waistband, yoke, fly, pockets, belt loops, and any extra back-rise shaping fit the layout.
+4. Use the cloth planner for a conservative arrangement of four panel envelopes. Choose Selvedge for up to two edge-anchored panels per row, or Regular to fit all four panels across when the usable width permits. Enter a reserve and check that the actual waistband, yoke, fly, pockets, belt loops, and any extra back-rise shaping fit the layout.
 
 The leg split remains **45% front / 55% back** by default. The back waist allocation is **0.5 inch larger than the front allocation** on each side, while the combined waist target stays constant. Back crotch extension remains larger than front. These settings preserve intentional back/front balance; they do not establish that a pattern will hang correctly without seam-length, grain and fit checks.
 
@@ -66,3 +66,11 @@ Serve the repository with a static HTTP server, for example `python3 -m http.ser
 Run `npm test` with Node 22 or later. Tests cover target conservation with a wider back, source/ease normalization, waistband origins, independent curved rise, measured overrides, invalid geometry, fabric width/selvedge constraints, shrinkage, fractions, old-preset migration, and comparison of both panels.
 
 The interface is additionally checked in Safari's WebKit engine at phone, tablet and desktop widths. A physical sewing sample is still necessary to validate fit and how the finished jeans hang.
+
+
+
+## Version 3 release
+
+The public calculator loads from `v3/`. Version 2 files remain available for older cached pages. Existing workspace, named drafts, and legacy backup keys stay intact. The Home Screen manifest retains its relative identity and scope for GitHub Pages. A complete versioned cache covers the calculator, font, icons, measuring guide, and PDF references.
+
+Run `npm test` for all calculation and layout regressions.

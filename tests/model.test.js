@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {DEFAULT_DRAFT,clone,normalizeDraft,parseLength,formatLength,computeDraft,planFabric,migrateLegacyPreset,compareDrafts} from '../model.js';
+import {DEFAULT_DRAFT,clone,normalizeDraft,parseLength,formatLength,computeDraft,planFabric,migrateLegacyPreset,compareDrafts} from '../v3/model.js';
 const sample=()=>({...clone(DEFAULT_DRAFT),waist:32,seat:40,depth:12,length:42,opening:8,fabricWidth:30});
 const near=(a,b)=>assert.ok(Math.abs(a-b)<1e-8,`${a} != ${b}`);
 
@@ -82,3 +82,4 @@ test('comparison calculates both panel changes from current values',()=>{
 test('normalization whitelists data and never shares default seam objects',()=>{
  const d=normalizeDraft(JSON.parse('{"__proto__":{"polluted":true},"waist":32,"notes":"hi"}'));assert.equal({}.polluted,undefined);assert.equal(d.waist,32);d.seams.hem=99;assert.equal(DEFAULT_DRAFT.seams.hem,1);
 });
+
