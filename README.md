@@ -47,6 +47,8 @@ This estimates the displayed rectangular envelopes, not a production cutting mar
 
 ## Saved data and iPhone
 
+Each Step 1 info button opens a visual guide with **Pants · around**, **Pants · flat ×2**, and **Body · around** tabs. One definition, illustration and three steps appear at a time. Waist and seat help opens on that field’s current method; other guides use the waist method as their starting tab. Browsing help never changes inputs or measurement settings. Total-length help matches the selected waistband starting point.
+
 The **How to measure** link opens `measure.html`, with **Body** and **Jeans** tabs. Fourteen lessons use original annotated vector illustrations, calculator-specific field mapping, direct links to the correct input, keyboard-accessible tabs, and linked primary measuring references. Tutorial navigation never changes measurements or source settings. The guide and illustration modules are cached for offline use with the calculator.
 
 The interface follows saved draft → measurements → front/back results → fabric planning. System typography, readable phone controls and subtle dividers keep the everyday path clear. **Test measurements** stays visible beside the measurement heading, and the front/back reference diagram appears above calculated results. Fit details, proportions, notes, formulas and cutting allowances remain in labeled expandable sections. The tutorial shows preparation at the first step and keeps it available in **Before you measure** throughout.
